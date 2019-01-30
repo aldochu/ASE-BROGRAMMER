@@ -1,0 +1,67 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master_Page.master.cs" Inherits="Brogrammer.Master_Page" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+	<link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/style.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+		<h1>IHIHIHIHI</h1>
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+
+	<form id="form1" runat="server">
+
+        <nav class="navbar navbar-light" style="box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); background-color:floralwhite">
+             <div class="nav">
+                 
+                  <span class="font_style_one black pt-2 pl-3">SAVE MY GPA FORUM</span>
+
+
+				 <%if(Session["Account"] == null){%>
+
+				<% }else{%>
+				 <br />
+				 HELLO
+                    <%if((String)Session["ROLE"] == "admin"){%>
+                    <asp:Label ID="lblUsername_admin" runat="server" CssClass="mr-1 btn"></asp:Label>
+                    <%}else{ %>
+                    <%if((String)Session["ROLE"] == "student"  && Session["Account"] != null){%>
+                  <asp:Label ID="Label1" runat="server"></asp:Label>
+                  <%}%>
+
+              <%if((String)Session["ROLE"] == "prof"  && Session["Account"] != null){%>
+                     <asp:Label ID="Label2" runat="server"></asp:Label>
+              <%}%>
+              <%if((String)Session["ROLE"] == "admin"  && Session["Account"] != null){%>
+                   <asp:Label ID="Label3" runat="server"></asp:Label>
+              <%}%>
+                    <%}%>
+				    <a class="btn btn-outline-secondary" href="SignOut.aspx">Sign Out</a>
+                   
+				<%}%>
+                  
+              </div>
+
+
+             <div class="justify-content-end">
+
+
+                
+            </div>
+        </nav>
+
+
+
+    
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+				<p>inherting from master page</p>
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿
+.black {
+	color: black;
+}
+
+.menu {
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+}
+
+.font_style_one {
+	font-family: 'Karma', serif;
+	font-weight: 500;
+	font-size: 28px;
+}
+
+.content-wrap {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 0px 80px;
+	overflow: auto;
+}
