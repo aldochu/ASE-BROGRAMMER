@@ -95,7 +95,7 @@ namespace Brogrammer.Controller
 
         {
 
-            string[] validFileTypes = { "gif", "png", "jpg", "jpeg" };
+            string[] validFileTypes = { "gif", "png", "jpg", "jpeg", "pdf" };
 
             bool isValidFile = false;
 

@@ -136,6 +136,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="Default.aspx" />
+    <Content Include="DisplayPost.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -150,6 +151,7 @@
     <Content Include="LoginPage.aspx" />
     <Content Include="Master_Page.Master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="PostPage.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -190,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controller\AccountManagement.cs" />
     <Compile Include="Controller\AccountVerificationSystem.cs" />
+    <Compile Include="Controller\PostSystem.cs" />
     <Compile Include="Controller\Validation.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -198,7 +201,15 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DisplayPost.aspx.cs">
+      <DependentUpon>DisplayPost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DisplayPost.aspx.designer.cs">
+      <DependentUpon>DisplayPost.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\account.cs" />
+    <Compile Include="Entity\post.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +240,13 @@
     </Compile>
     <Compile Include="Master_Page.Master.designer.cs">
       <DependentUpon>Master_Page.Master</DependentUpon>
+    </Compile>
+    <Compile Include="PostPage.aspx.cs">
+      <DependentUpon>PostPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PostPage.aspx.designer.cs">
+      <DependentUpon>PostPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignOut.aspx.cs">
@@ -262,6 +280,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="upload\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
