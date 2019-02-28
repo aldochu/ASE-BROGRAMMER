@@ -16,7 +16,16 @@ namespace Brogrammer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            displayFavPosts(user);
             displayRecentPosts(user);
+        }
+
+        protected void displayFavPosts(String userId)
+        {
+            List<fpost> favPosts = PostSystem.GetFavPosts(user);
+
+            favPostsRepeater.DataSource = favPosts;
+            favPostsRepeater.DataBind();
         }
 
         protected void displayRecentPosts(String userId)
@@ -26,5 +35,7 @@ namespace Brogrammer
             recentPostsRepeater.DataSource = recentPosts;
             recentPostsRepeater.DataBind();
         }
+
+        
     }
 }

@@ -25,13 +25,14 @@
             }
 
         #fav-container {
-            background-color: blue;
+            background-color: grey;
+            color: white;
             float: left;
             align-content: center;
-            width: 400px;
+            width: 500px;
             margin-left: 100px;
             overflow-y: scroll;
-            height: 100px;
+            height: 200px;
         }
 
         #recent-container {
@@ -52,12 +53,39 @@
 
         <div id="fav-container">
 
-            <p>line 1</p>
-            <p>line 2</p>
-            <p>line 3</p>
-            <p>line 4</p>
-            <p>line 5</p>
-            <p>line 6</p>
+            <asp:Repeater ID="favPostsRepeater" runat="server">
+
+                <HeaderTemplate>
+                    <table id="favPostsTB" class="table table-hover">
+                        <tr>
+                            <th>User</th>
+                            <th>Title of Post</th>
+                            <th>Date of Post</th>
+                            <th>Added On</th>
+                        </tr>
+                </HeaderTemplate>
+
+                <ItemTemplate>
+                    <tr>
+                        <td>
+                            <%# Eval("uid") %>
+                        </td>
+                        <td>
+                            <a href="~/ViewPost.aspx?pid<%# Eval("post.id") %>"><%# Eval("post.title") %></a>
+                        </td>
+                        <td>
+                            <%# Eval("post.date") %>
+                        </td>
+                        <td>
+                            <%# Eval("date") %>
+                        </td>
+                    </tr>
+                </ItemTemplate>
+
+                <FooterTemplate>
+                    </table>
+                </FooterTemplate>
+            </asp:Repeater>
 
         </div>
 
@@ -94,7 +122,7 @@
                             <%# Eval("uid") %>
                         </td>
                         <td>
-                            <a href="#"><%# Eval("title") %></a>
+                            <a href="~/ViewPost.aspx?pid<%# Eval("id") %>"><%# Eval("title") %></a>
                         </td>
                         <td>
                             <%# Eval("date") %>

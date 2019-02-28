@@ -135,6 +135,47 @@ namespace Brogrammer.Controller
             return dt;
         }
 
+        public static List<fpost> GetFavPosts(string uid)
+        {
+
+            List<fpost> list = new List<fpost>();
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT fav.id AS fid, post.id AS pid, fav.uid AS uid, post.title AS title, post.date AS pdate, fav.date AS fdate " +
+                "FROM fav, post WHERE fav.uid = @uid AND fav.uid IN (SELECT brogrammer.post.uid FROM brogrammer.post) " +
+                "GROUP BY pid ORDER BY pdate DESC";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@uid", uid);
+
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                fpost fp = new fpost();
+
+                fp.id = reader["fid"].ToString();
+                fp.uid = reader["uid"].ToString();
+                    // create new post object to store pid
+                    post p = new post();
+                    p.id = reader["pid"].ToString();
+                    p.title = reader["title"].ToString();
+                    p.date = Convert.ToDateTime(reader["pdate"]);
+                    
+                // store created post object into fpost object
+                fp.post = p;
+                fp.date = Convert.ToDateTime(reader["fdate"]);
+
+                list.Add(fp);
+            }
+            conn.Close();
+
+            return list;
+        }
+
     }
 
 }
