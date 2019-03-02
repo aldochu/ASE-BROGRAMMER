@@ -18,7 +18,17 @@ namespace Brogrammer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            //for testing purposes
+            a.id = "user12";
+            Session["Account"] = a; //saving to session
+            /////////////////
+
+
             a = (account)Session["Account"]; //to get the session
+
+            
+
 
             Get_and_Bind_Post(); //this method is to get the post     
 
@@ -48,6 +58,7 @@ namespace Brogrammer
             lblUid.Text = p.uid;
             lblTitle.Text = p.title;
             lblContents.Text = p.content;
+            lblDate.Text = p.date.ToString();
         }
 
         private void bindAccounts()
@@ -75,6 +86,17 @@ namespace Brogrammer
             Response.Redirect("AdminUpdateAccPage.aspx"); //go to another page that do some actions that update the acc
         }
 
+        protected void btnUpdatepost_click(object sender, EventArgs e)
+        {
+            //since the postID is still in the session, we don't have to do anything
+
+            //for testing purposes
+            Session["Post"] = p; //saving to session
+
+
+            Response.Redirect("EditPostPage.aspx"); //redirec
+        }
+    
         protected void btnDelete_click(object sender, EventArgs e)
         {
             Button button = (Button)sender;

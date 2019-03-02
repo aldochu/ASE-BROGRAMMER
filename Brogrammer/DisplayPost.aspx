@@ -51,6 +51,12 @@
   table, th, td {
   border: 1px solid black;
 }
+
+  .Post{
+
+  padding-bottom: 80px;
+
+}
 	</style>
 
 	<script type="text/javascript">
@@ -61,7 +67,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div>
+    <div class="Post">
 		<table class="tableStyle" >
 			<tr>
 					<td class="auto-style2 font_style_two">Posted by:			
@@ -80,9 +86,21 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 						<%if (p.file != ""){%>
 					<iframe class="center" name="myframe" id="myframe" width="400" height="400" runat=server></iframe><br />
 						<%}%>
-				</td>
-				
+				</td>			
 			</tr>
+			<tr>
+				<td class="auto-style2">	
+					Date of Post:<asp:Label ID="lblDate" runat="server"></asp:Label>	
+					<%if (p.uid == a.id){%>
+					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnUpdatepost_click" CssClass="btn btn-dark" />
+					<%}%>
+				</td>	
+			</tr>
+		</table>
+		</div>
+
+	<div>
+		<table class="tableStyle" >
 			<tr>
 				<td>
 					 <asp:GridView ID="grdAllCom" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px">

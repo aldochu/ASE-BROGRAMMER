@@ -49,6 +49,24 @@ namespace Brogrammer {
         protected global::System.Web.UI.HtmlControls.HtmlIframe myframe;
         
         /// <summary>
+        /// lblDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDate;
+        
+        /// <summary>
+        /// btnUpdatepost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdatepost;
+        
+        /// <summary>
         /// grdAllCom control.
         /// </summary>
         /// <remarks>
