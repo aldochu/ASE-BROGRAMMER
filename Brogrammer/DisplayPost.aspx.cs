@@ -12,26 +12,42 @@ namespace Brogrammer
     public partial class DisplayPost : System.Web.UI.Page
     {
         public List<post> list = new List<post>();
-
+        public account a = new account();
+        public post p = new post();
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            account a = new account();
             a = (account)Session["Account"]; //to get the session
-            if (a != null)
-            {
-            }
-            else
-            {
-                myframe.Attributes["src"] = "~/upload/" + "PrintablePage.pdf";
-                //Response.Redirect("LoginPage.aspx");
-            }
+
+            Get_and_Bind_Post(); //this method is to get the post     
 
             if (!Page.IsPostBack)
             {
                 bindAccounts();
             }
+
+
+
+
+        }
+
+        private void Get_and_Bind_Post()
+        {
+            //This line is a placeholder to get postID from session 1st
+            String postID = "user1200220191642";
+
+            p = PostSystem.GetPost(postID);//this is the session id
+
+            if (p.file != "")
+            {
+                myframe.Attributes["src"] = "~/upload/" + p.file;
+                //Response.Redirect("LoginPage.aspx");
+            }
+
+            lblUid.Text = p.uid;
+            lblTitle.Text = p.title;
+            lblContents.Text = p.content;
         }
 
         private void bindAccounts()

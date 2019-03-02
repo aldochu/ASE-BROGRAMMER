@@ -8,6 +8,13 @@
             font-family: 'Karma', serif;
             font-weight: 500;
             font-size: 20px;
+			word-wrap: break-word;
+        }
+		.font_style_three {
+            font-family: 'Karma', serif;
+            font-weight: 400;
+            font-size: 14px;
+			word-wrap: break-word;
         }
         .modalBackground {
             background-color: Black;
@@ -29,15 +36,21 @@
             margin-right: auto;
 		}
     	.center {
-    		margin-left: auto;
-    		margin-right: auto;
-    		text-align: center;
+    		margin: auto;
+			width: 50%;
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
     	}
 
   .tableStyle {
             margin-left: auto;
             margin-right: auto;
         }
+
+  table, th, td {
+  border: 1px solid black;
+}
 	</style>
 
 	<script type="text/javascript">
@@ -49,10 +62,29 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-		<table class="tableStyle">
+		<table class="tableStyle" >
+			<tr>
+					<td class="auto-style2 font_style_two">Posted by:			
+				    <asp:Label ID="lblUid" runat="server" CssClass="font_style_two"></asp:Label>				
+				</td>							
+			</tr>
+			<tr>
+				<td class="auto-style2 font_style_two">Title:			
+				    <asp:Label ID="lblTitle" runat="server" CssClass="font_style_two"></asp:Label>				
+				</td>								
+			</tr>
+			<tr>
+					<td class="auto-style2 font_style_two">			
+				    <asp:Label Width="700px" ID="lblContents" runat="server" CssClass="font_style_three"></asp:Label>							
+					<br />
+						<%if (p.file != ""){%>
+					<iframe class="center" name="myframe" id="myframe" width="400" height="400" runat=server></iframe><br />
+						<%}%>
+				</td>
+				
+			</tr>
 			<tr>
 				<td>
-					<iframe name="myframe" id="myframe" width="400" height="400" runat=server></iframe><br />
 					 <asp:GridView ID="grdAllCom" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px">
                 		 <AlternatingRowStyle BackColor="White" />
                 <Columns>
@@ -85,6 +117,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
             </asp:GridView>
 					</td>
 				</tr>
+			</table>
 			</div>
 
 

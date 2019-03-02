@@ -35,18 +35,17 @@ namespace Brogrammer.Controller
             return result;
         }
 
-        public static post GetPost(string id, string uid)
+        public static post GetPost(string id)
         {
             post p = new post();
 
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM post WHERE id=@id AND uid=@uid";
+            string query = "SELECT * FROM post WHERE id=@id";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@uid", uid);
 
             conn.Open();
             var reader = cmd.ExecuteReader();
