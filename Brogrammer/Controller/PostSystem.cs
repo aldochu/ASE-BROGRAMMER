@@ -142,6 +142,7 @@ namespace Brogrammer.Controller
             dt.Columns.Add("content");
             dt.Columns.Add("upvote");
             dt.Columns.Add("downvote");
+            dt.Columns.Add("endorseby");
             dt.Columns.Add("date");
 
 
@@ -158,6 +159,7 @@ namespace Brogrammer.Controller
                 dt.Rows[i]["content"] = reader["content"].ToString();
                 dt.Rows[i]["upvote"] = reader["upvote"].ToString();
                 dt.Rows[i]["downvote"] = reader["downvote"].ToString();
+                dt.Rows[i]["endorseby"] = reader["endorseby"].ToString();
                 dt.Rows[i]["date"] = reader["date"].ToString();
                 i++;
 
@@ -230,6 +232,88 @@ namespace Brogrammer.Controller
 
             conn.Close();
             return result;
+        }
+
+        public static int Upvote(string commentid, string userid)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "UPDATE comment SET upvote = upvote + 1 where commentid=@commentid";
+
+            //this is to increment the vote
+            var cmd = new MySqlCommand(query, conn); 
+            cmd.Parameters.AddWithValue("@commentid", commentid);
+
+
+            //this is to create record into table so user can't vote again
+            query = "INSERT into votingrec (commentid,uid) VALUES (@commentid,@userid)";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@commentid", commentid);
+            cmd2.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            cmd2.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+
+
+            conn.Close();
+            return result;
+        }
+
+        public static int Downvote(string commentid, string userid)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "UPDATE comment SET downvote = downvote - 1 where commentid=@commentid";
+
+            //this is to increment the vote
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@commentid", commentid);
+
+
+            //this is to create record into table so user can't vote again
+            query = "INSERT into votingrec (commentid,uid) VALUES (@commentid,@userid)";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@commentid", commentid);
+            cmd2.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            cmd2.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+
+
+            conn.Close();
+            return result;
+        }
+
+        public static int Checkvote(string commentid, string userid)
+        {
+            int i=0;
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT * FROM votingrec WHERE commentid=@cid AND uid=@uid";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@cid", commentid);
+            cmd.Parameters.AddWithValue("@uid", userid);
+
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                i++;
+            }
+            conn.Close();
+
+            return i;
         }
 
     }

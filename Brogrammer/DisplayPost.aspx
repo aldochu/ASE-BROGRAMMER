@@ -130,7 +130,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                     </asp:TemplateField>
 					<asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_click" CssClass="btn btn-dark" />
+                            <asp:Button ID="btnUpdate" runat="server" Text="Up" OnClick="btnUpVote" CssClass="btn btn-dark" />
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
@@ -140,7 +140,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_click" CssClass="btn btn-danger"/>
+                            <asp:Button ID="btnDelete" runat="server" Text="Down" OnClick="btnDownVote" CssClass="btn btn-danger"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
@@ -188,18 +188,16 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 		</table>
         </div>
 
-
-
-		<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+	<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <asp:HiddenField ID="HiddenField1" runat="server" />
 
-		<cc1:modalpopupextender id="deletePopup" runat="server" popupcontrolid="Panel2" targetcontrolid="HiddenField1" cancelcontrolid="btnNo" backgroundcssclass="modalBackground"></cc1:modalpopupextender>
+		<cc1:modalpopupextender id="AlertPopup" runat="server" popupcontrolid="Panel2" targetcontrolid="HiddenField1" cancelcontrolid="btnNo" backgroundcssclass="modalBackground"></cc1:modalpopupextender>
         <asp:Panel ID="Panel2" runat="server" CssClass="modalPopup1" align="center" Style="display: none">
-             <asp:Label ID="Label3" runat="server" Text="Are you sure you want to delete your account?" Visible="true"></asp:Label><br />
+            <asp:Label ID="Label3" runat="server" Text="Voting failed, you have already voted       " Visible="true"></asp:Label><br />
             <br />
             <asp:Label ID="lbl_id" runat="server" Text="" Visible="false"></asp:Label>
-            <asp:Button ID="Button4" runat="server" Text="Confirm" OnClick="btnConfirm_Click" />
-            <asp:Button ID="btnNo" runat="server" Text="Cancel"/>
-            <div class="m-2"></div>
+            <asp:Button ID="btnNo" runat="server" Text="Okay"/>
+            <div style="padding:10px" class="m-2"></div>
         </asp:Panel>
+
 </asp:Content>

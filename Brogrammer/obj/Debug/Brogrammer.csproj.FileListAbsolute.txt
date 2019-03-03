@@ -352,3 +352,4 @@ D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csproj.CoreCompileInputs.cache
 D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csproj.CopyComplete
 D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.dll
 D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.pdb
+D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csprojResolveAssemblyReference.cache
