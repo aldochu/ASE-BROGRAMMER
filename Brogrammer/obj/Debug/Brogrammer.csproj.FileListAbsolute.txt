@@ -348,7 +348,6 @@ D:\ASE-BROGRAMMER\Brogrammer\bin\Microsoft.AI.DependencyCollector.xml
 D:\ASE-BROGRAMMER\Brogrammer\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\ASE-BROGRAMMER\Brogrammer\bin\Microsoft.AI.WindowsServer.xml
 D:\ASE-BROGRAMMER\Brogrammer\bin\Microsoft.AI.Web.xml
-D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csprojResolveAssemblyReference.cache
 D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csproj.CoreCompileInputs.cache
 D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csproj.CopyComplete
 D:\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.dll

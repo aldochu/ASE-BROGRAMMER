@@ -29,11 +29,11 @@ namespace Brogrammer
 
             a = (account)Session["Account"]; //to get the session
 
+
+            Get_and_Bind_Post(); //this method is to get the post  
             
 
-
-            Get_and_Bind_Post(); //this method is to get the post     
-
+            //this is to bind all comments into the list
             if (!Page.IsPostBack)
             {
                 bindAccounts();
@@ -44,7 +44,7 @@ namespace Brogrammer
 
         }
 
-        private void Get_and_Bind_Post()
+        private void Get_and_Bind_Post() //this is to display the post on the page
         {
             //This line is a placeholder to get postID from session 1st
             String postID = "user1230220191627";
@@ -60,6 +60,7 @@ namespace Brogrammer
             lblUid.Text = p.uid;
             lblTitle.Text = p.title;
             lblContents.Text = p.content;
+            lblContents.Rows = (lblContents.Text.Split('\n').Length);
             lblDate.Text = p.date.ToString();
         }
 

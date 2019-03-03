@@ -127,7 +127,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM post";
+            string query = "SELECT * FROM comment";
 
 
             var cmd = new MySqlCommand(query, conn);
@@ -136,9 +136,13 @@ namespace Brogrammer.Controller
 
 
             DataTable dt = new DataTable();
-            dt.Columns.Add("id");
+            dt.Columns.Add("cid");
             dt.Columns.Add("uid");
+            dt.Columns.Add("name");
             dt.Columns.Add("content");
+            dt.Columns.Add("upvote");
+            dt.Columns.Add("downvote");
+            dt.Columns.Add("date");
 
 
             int i = 0;
@@ -148,10 +152,13 @@ namespace Brogrammer.Controller
             {
 
                 dt.Rows.Add();
-                dt.Rows[i]["id"] = reader["id"].ToString();
-                dt.Rows[i]["uid"] = reader["uid"].ToString();
+                dt.Rows[i]["cid"] = reader["commentid"].ToString();
+                dt.Rows[i]["uid"] = reader["userid"].ToString();
+                dt.Rows[i]["name"] = reader["name"].ToString();
                 dt.Rows[i]["content"] = reader["content"].ToString();
-
+                dt.Rows[i]["upvote"] = reader["upvote"].ToString();
+                dt.Rows[i]["downvote"] = reader["downvote"].ToString();
+                dt.Rows[i]["date"] = reader["date"].ToString();
                 i++;
 
             }

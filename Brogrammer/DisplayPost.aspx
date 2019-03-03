@@ -81,7 +81,8 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 			</tr>
 			<tr>
 					<td class="auto-style2 font_style_two">			
-				    <asp:Label Width="700px" ID="lblContents" runat="server" CssClass="font_style_three"></asp:Label>							
+					<asp:TextBox ID="lblContents" TextMode="multiline" runat="server" Width="700px" Text='<%# Eval("Content") %>'  Height='<%# (Eval("Content").ToString().Length/4)+30%>' ReadOnly="true"></asp:TextBox>
+						
 					<br />
 						<%if (p.file != ""){%>
 					<iframe class="center" name="myframe" id="myframe" width="400" height="600" runat=server></iframe><br />
@@ -99,26 +100,32 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 		</table>
 		</div>
 
-	<div>
+	<div class="Post">
+		<h1 class="font_style_one mb-3 mt-2 text-center">Comments</h1>
 		<table class="tableStyle" >
 			<tr>
 				<td>
 					 <asp:GridView ID="grdAllCom" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px">
                 		 <AlternatingRowStyle BackColor="White" />
                 <Columns>
-                    <asp:TemplateField HeaderText="ID" Visible="false">
+                    <asp:TemplateField HeaderText="CID" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("ID") %>'></asp:Label>
+                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("CID") %>'></asp:Label>
+                        </ItemTemplate>	
+                    </asp:TemplateField>
+					<asp:TemplateField HeaderText="UID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblUID" runat="server" Text='<%# Eval("UID") %>'></asp:Label>
                         </ItemTemplate>	
                     </asp:TemplateField>
 					<asp:TemplateField  HeaderText="Name">
                         <ItemTemplate>
-                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Uid") %>'></asp:Label>
+                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Comment" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="550px" Text='<%# Eval("Content") %>'  Height='<%# (Eval("Content").ToString().Length/4)+30%>' ReadOnly="true"></asp:TextBox>
+							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/2)%>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
@@ -126,9 +133,24 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                             <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_click" CssClass="btn btn-dark" />
                         </ItemTemplate>
                     </asp:TemplateField>
+					<asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="lblupvote" runat="server" Width="20px" Text='<%# Eval("Upvote") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_click" CssClass="btn btn-danger"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+					<asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="lblDownvote" runat="server"  Width="20px" Text='<%# Eval("Downvote") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+					<asp:TemplateField  HeaderText="Date">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDate" runat="server" Width="60px" Text='<%# Eval("Date") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -141,7 +163,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 
 	<div class="content-wrap mb-5 mt-5" style="max-width:840px;">
-        <h1 class="font_style_one mb-3 mt-2 text-center">Comment</h1>
+        <h1 class="font_style_one mb-3 mt-2 text-center">Add Comment</h1>
 		<table style="width:100%;">
 
 			<tr>

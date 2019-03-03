@@ -40,7 +40,7 @@
 				<td class="auto-style2 font_style_two" style="padding-top:20px;">Reupload file</td>
 				<td>
 					<%if (p.file != ""){%>
-					<iframe class="center" name="myframe" id="myframe" width="100" height="100" runat=server></iframe><br />
+					<iframe class="center" name="myframe" id="myframe" width="500" height="700" runat=server></iframe><br />
 					<%}%>
 					<asp:FileUpload ID="FileUpload" runat="server" Width="280px"/>				
 				</td>
