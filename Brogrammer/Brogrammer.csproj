@@ -217,6 +217,7 @@
       <DependentUpon>EditPostPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entity\account.cs" />
+    <Compile Include="Entity\comment.cs" />
     <Compile Include="Entity\fpost.cs" />
     <Compile Include="Entity\post.cs" />
     <Compile Include="Global.asax.cs">

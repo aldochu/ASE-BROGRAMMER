@@ -139,6 +139,35 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 			</div>
 
 
+
+	<div class="content-wrap mb-5 mt-5" style="max-width:840px;">
+        <h1 class="font_style_one mb-3 mt-2 text-center">Comment</h1>
+		<table style="width:100%;">
+
+			<tr>
+				<td>
+					<asp:TextBox ID="txtContent" TextMode="multiline" Rows="15" runat="server" Width="100%" CssClass="form-control mt-1"></asp:TextBox>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding-left:36%">
+					<asp:Label ID="lblContent" runat="server" ForeColor="Red" CssClass="mt-1"></asp:Label>
+				</td>
+			</tr>	
+			<tr>
+				<td style="padding-left:33%">Comment as:&nbsp;&nbsp;&nbsp;
+					<asp:RadioButton id="id" runat="server" GroupName="measurementSystem" Checked="true"></asp:RadioButton>ID &nbsp;
+					<asp:RadioButton id="anon" runat="server" GroupName="measurementSystem"></asp:RadioButton>Anon
+				</td>
+			</tr>
+			<tr>
+				<td style="padding-top:10px; padding-bottom:10px; padding-left:33%" ><asp:Button ID="Button2" runat="server" OnClick="create_Click" Text="Submit" CssClass="btn btn-primary mb-1 ml-5" Width="200px" /></td>
+			</tr>
+		</table>
+        </div>
+
+
+
 		<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <asp:HiddenField ID="HiddenField1" runat="server" />
 

@@ -21,7 +21,9 @@ namespace Brogrammer
 
             //for testing purposes
             a.id = "user1";
+            a.name = "stud1";
             Session["Account"] = a; //saving to session
+            
             /////////////////
 
 
@@ -115,6 +117,45 @@ namespace Brogrammer
             String accountID = lbl_id.Text;
             AccountManagement.DeleteAccount(accountID);
             Response.Write("<script type=\"text/javascript\">alert('Account Deleted!');location.href='ListOfName.aspx'</script>");
+        }
+
+        protected void create_Click(object sender, EventArgs e)
+        {
+
+        bool check = true;
+
+            lblTitle.Text = lblContent.Text = "";
+
+            if (Validation.isEmpty(txtContent.Text))
+            {
+                lblContent.Text = "Comment cannot be empty";
+                check = false;
+            }
+
+
+
+            if (check == true)
+            {
+                comment c = new comment();
+
+                c.commentid = DateTime.Now.ToString("ddMMyyyyHHmm");
+                c.postid = p.id;
+                c.userid = a.id;
+                if (id.Checked == true)
+                {
+                    c.name = a.name;
+                }
+                else
+                    c.name = "Anon";
+                c.content = txtContent.Text;
+                c.date = DateTime.Now;
+
+                PostSystem.createComment(c);
+
+                Response.Write("<script type=\"text/javascript\">alert('Comment added');location.href='DisplayPost.aspx'</script>");
+
+            }
+
         }
     }
 }

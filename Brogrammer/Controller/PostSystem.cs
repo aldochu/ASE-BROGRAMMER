@@ -199,6 +199,32 @@ namespace Brogrammer.Controller
             return list;
         }
 
+
+        /////////////////////////////////////////////////////////THIS SECTION FOR COMMENT FUNCTION////////////////////////////////////////////
+        public static int createComment(comment c)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "INSERT into comment (commentid,postid,userid,name,content,date) VALUES (@commentid,@postid,@userid,@name,@content,@date)";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@commentid", c.commentid);
+            cmd.Parameters.AddWithValue("@postid", c.postid);
+            cmd.Parameters.AddWithValue("@userid", c.userid);
+            cmd.Parameters.AddWithValue("@name", c.name);
+            cmd.Parameters.AddWithValue("@content", c.content);
+            cmd.Parameters.AddWithValue("@date", c.date);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
     }
 
 }
