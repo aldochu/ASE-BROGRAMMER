@@ -28,8 +28,8 @@ namespace Brogrammer
 
         public void loadData()
         {
-            txtTitle.Text = p.title;
-            txtContent.Text = p.content;
+            txtTitle.Attributes.Add("placeholder", p.title);
+            txtContent.Attributes.Add("placeholder", p.content);
 
             if (p.file != "")
             {
@@ -38,20 +38,17 @@ namespace Brogrammer
             }
         }
 
-        protected void create_Click(object sender, EventArgs e)
+        protected void update_Click(object sender, EventArgs e)
         {
             bool check = true;
 
-            lblTitle.Text = lblContent.Text = "";
-            if (Validation.isEmpty(txtTitle.Text))
+            if (!Validation.isEmpty(txtTitle.Text))
             {
-                lblTitle.Text = "Title cannot be empty";
-                check = false;
+                p.title = txtContent.Text;
             }
-            if (Validation.isEmpty(txtContent.Text))
+            if (!Validation.isEmpty(txtContent.Text))
             {
-                lblContent.Text = "Content cannot be empty";
-                check = false;
+                p.content = txtContent.Text;
             }
 
 
@@ -70,12 +67,6 @@ namespace Brogrammer
 
             if (check == true)
             {
-                post p = new post();
-                p.id = "user1" + DateTime.Now.ToString("ddMMyyyyHHmm"); //user1 is just a placeholder, will use session to get the id
-                p.uid = "user1"; //user id
-                p.title = txtContent.Text;
-                p.content = txtContent.Text;
-                p.date = DateTime.Now;
 
                 if (FileUpload.HasFile)
                 {
@@ -83,9 +74,9 @@ namespace Brogrammer
                     FileUpload.PostedFile.SaveAs(Server.MapPath("~/upload/") + p.file);
                 }
 
-                PostSystem.createPost(p);
+                PostSystem.updatePost(p);
 
-                Response.Write("<script type=\"text/javascript\">alert('Post is created successfully!');location.href='HomePage.aspx'</script>");
+                Response.Write("<script type=\"text/javascript\">alert('Post is updated successfully!');location.href='DisplayPost.aspx'</script>");
 
             }
 

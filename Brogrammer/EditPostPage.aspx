@@ -52,7 +52,7 @@
 
 			<tr>
 				<td></td>
-				<td style="padding-top:30px; padding-bottom:30px" ><asp:Button ID="Button2" runat="server" OnClick="create_Click" Text="Submit" CssClass="btn btn-primary mb-1 ml-5" Width="200px" /></td>
+				<td style="padding-top:30px; padding-bottom:30px" ><asp:Button ID="Button2" runat="server" OnClick="update_Click" Text="Submit" CssClass="btn btn-primary mb-1 ml-5" Width="200px" /></td>
 			</tr>
 		</table>
         </div>

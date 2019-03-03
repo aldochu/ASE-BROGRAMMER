@@ -137,6 +137,7 @@
     <Content Include="Content\style.css" />
     <Content Include="Default.aspx" />
     <Content Include="DisplayPost.aspx" />
+    <Content Include="EditPostPage.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -207,6 +208,13 @@
     </Compile>
     <Compile Include="DisplayPost.aspx.designer.cs">
       <DependentUpon>DisplayPost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPostPage.aspx.cs">
+      <DependentUpon>EditPostPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditPostPage.aspx.designer.cs">
+      <DependentUpon>EditPostPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entity\account.cs" />
     <Compile Include="Entity\fpost.cs" />

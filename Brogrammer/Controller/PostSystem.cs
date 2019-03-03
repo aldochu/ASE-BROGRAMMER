@@ -35,6 +35,30 @@ namespace Brogrammer.Controller
             return result;
         }
 
+        public static int updatePost(post p)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+
+
+            string query = "UPDATE post SET title = @title, content=@content, file=@file WHERE id=@id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", p.id);
+            cmd.Parameters.AddWithValue("@title", p.title);
+            cmd.Parameters.AddWithValue("@content", p.content);
+            cmd.Parameters.AddWithValue("@file", p.file);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
         public static post GetPost(string id)
         {
             post p = new post();

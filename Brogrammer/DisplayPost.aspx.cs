@@ -20,7 +20,7 @@ namespace Brogrammer
         {
 
             //for testing purposes
-            a.id = "user12";
+            a.id = "user1";
             Session["Account"] = a; //saving to session
             /////////////////
 
@@ -45,7 +45,7 @@ namespace Brogrammer
         private void Get_and_Bind_Post()
         {
             //This line is a placeholder to get postID from session 1st
-            String postID = "user1200220191642";
+            String postID = "user1230220191627";
 
             p = PostSystem.GetPost(postID);//this is the session id
 

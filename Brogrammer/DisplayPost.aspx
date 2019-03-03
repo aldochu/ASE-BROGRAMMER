@@ -37,7 +37,7 @@
 		}
     	.center {
     		margin: auto;
-			width: 50%;
+			width: 100%;
 			text-align: center;
 			margin-left: auto;
 			margin-right: auto;
@@ -84,7 +84,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 				    <asp:Label Width="700px" ID="lblContents" runat="server" CssClass="font_style_three"></asp:Label>							
 					<br />
 						<%if (p.file != ""){%>
-					<iframe class="center" name="myframe" id="myframe" width="400" height="400" runat=server></iframe><br />
+					<iframe class="center" name="myframe" id="myframe" width="400" height="600" runat=server></iframe><br />
 						<%}%>
 				</td>			
 			</tr>
