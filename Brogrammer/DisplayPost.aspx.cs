@@ -14,6 +14,7 @@ namespace Brogrammer
         public List<post> list = new List<post>();
         public account a = new account();
         public post p = new post();
+        public string role;
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -23,9 +24,12 @@ namespace Brogrammer
             a.id = "user1";
             a.name = "stud1";
             Session["Account"] = a; //saving to session
-            
+            Session["ROLE"] = "admi2n";
+
             /////////////////
 
+
+            role = (string)Session["ROLE"];
 
             a = (account)Session["Account"]; //to get the session
 
@@ -38,11 +42,8 @@ namespace Brogrammer
             {
                 bindAccounts();
             }
-
-
-
-
         }
+
 
         private void Get_and_Bind_Post() //this is to display the post on the page
         {
@@ -86,7 +87,7 @@ namespace Brogrammer
             Session["Post"] = p; //saving to session
 
 
-            Response.Redirect("EditPostPage.aspx"); //redirec
+            Response.Redirect("EditPostPage.aspx"); //redirect
         }
 
 
@@ -147,12 +148,34 @@ namespace Brogrammer
 
             Session["Comment"] = c; //saving comment id into session
 
-                Response.Write("<script type=\"text/javascript\">alert('Downvoted!');location.href='DisplayPost.aspx'</script>");
+            Response.Redirect("EditCommentPage.aspx"); //redirect
+
+        }
+
+        protected void btnDeletepost_click(object sender, EventArgs e)
+        {
+            comment c = new comment();
+
+            Button button = (Button)sender;
+            GridViewRow row = (GridViewRow)button.NamingContainer;
+            int i = Convert.ToInt32(row.RowIndex);
+
+            System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
+            System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
+            c.commentid = lblID.Text; //this is comment ID
+            c.content = txtContent.Text;
+
+
+
+
+            Session["Comment"] = c; //saving comment id into session
+
+            Response.Write("<script type=\"text/javascript\">alert('Downvoted!');location.href='DisplayPost.aspx'</script>");
 
         }
         
 
-
+        //THIS IS TO CREATE COMMENT
         protected void create_Click(object sender, EventArgs e)
         {
 

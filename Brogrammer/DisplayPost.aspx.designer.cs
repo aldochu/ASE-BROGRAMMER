@@ -67,6 +67,15 @@ namespace Brogrammer {
         protected global::System.Web.UI.WebControls.Button btnUpdatepost;
         
         /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
         /// grdAllCom control.
         /// </summary>
         /// <remarks>

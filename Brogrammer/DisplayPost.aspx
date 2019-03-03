@@ -100,7 +100,10 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 				<td class="auto-style2">	
 					Date of Post:<asp:Label ID="lblDate" runat="server"></asp:Label>	
 					<%if (p.uid == a.id){%>
-					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnUpdatepost_click" CssClass="btn btn-dark" />
+					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnEditComment" CssClass="btn btn-dark" />
+					<%}%>
+					<%if (role == "admin"){%>
+					<asp:Button ID="Button1" runat="server" Text="Delete" OnClick="btnDeletepost_click" CssClass="btn btn-danger" />
 					<%}%>
 				</td>	
 			</tr>
@@ -186,8 +189,8 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 			</tr>	
 			<tr>
 				<td style="padding-left:33%">Comment as:&nbsp;&nbsp;&nbsp;
-					<asp:RadioButton id="id" runat="server" GroupName="measurementSystem" Checked="true"></asp:RadioButton>ID &nbsp;
-					<asp:RadioButton id="anon" runat="server" GroupName="measurementSystem"></asp:RadioButton>Anon
+					<asp:RadioButton id="id" runat="server" Text="ID" GroupName="measurementSystem" Checked="true"></asp:RadioButton>ID &nbsp;
+					<asp:RadioButton id="anon" runat="server" Text="Anon" GroupName="measurementSystem"></asp:RadioButton>Anon
 				</td>
 			</tr>
 			<tr>

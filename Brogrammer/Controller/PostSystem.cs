@@ -59,6 +59,28 @@ namespace Brogrammer.Controller
             return result;
         }
 
+        public static int updateComment(comment c)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+
+
+            string query = "UPDATE comment SET content = @content WHERE commentid=@id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", c.commentid);
+            cmd.Parameters.AddWithValue("@content", c.content);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
         public static post GetPost(string id)
         {
             post p = new post();
