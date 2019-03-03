@@ -230,6 +230,38 @@ namespace Brogrammer.Controller
             return list;
         }
 
+        public static int DeletePost(post p)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            //delete votingrec 1st
+            string query = "DELETE FROM votingrec WHERE postid=@id";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", p.id);
+
+            //delete comment 2nd
+            query = "DELETE FROM comment WHERE postid=@id";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@id", p.id);
+
+            //delete post lastly
+            query = "DELETE FROM post WHERE id=@id";
+            var cmd3 = new MySqlCommand(query, conn);
+            cmd3.Parameters.AddWithValue("@id", p.id);
+
+            conn.Open();
+
+            cmd.ExecuteNonQuery();
+            cmd2.ExecuteNonQuery();
+            result = cmd3.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
 
         /////////////////////////////////////////////////////////THIS SECTION FOR COMMENT FUNCTION////////////////////////////////////////////
         public static int createComment(comment c)
@@ -256,7 +288,7 @@ namespace Brogrammer.Controller
             return result;
         }
 
-        public static int Upvote(string commentid, string userid)
+        public static int Upvote(string postid, string commentid, string userid)
         {
             int result = 0;
 
@@ -271,8 +303,9 @@ namespace Brogrammer.Controller
 
 
             //this is to create record into table so user can't vote again
-            query = "INSERT into votingrec (commentid,uid) VALUES (@commentid,@userid)";
+            query = "INSERT into votingrec (postid,commentid,uid) VALUES (@postid,@commentid,@userid)";
             var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@postid", postid);
             cmd2.Parameters.AddWithValue("@commentid", commentid);
             cmd2.Parameters.AddWithValue("@userid", userid);
 
@@ -285,7 +318,7 @@ namespace Brogrammer.Controller
             return result;
         }
 
-        public static int Downvote(string commentid, string userid)
+        public static int Downvote(string postid, string commentid, string userid)
         {
             int result = 0;
 
@@ -300,8 +333,9 @@ namespace Brogrammer.Controller
 
 
             //this is to create record into table so user can't vote again
-            query = "INSERT into votingrec (commentid,uid) VALUES (@commentid,@userid)";
+            query = "INSERT into votingrec (postid,commentid,uid) VALUES (@postid,@commentid,@userid)";
             var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@postid", postid);
             cmd2.Parameters.AddWithValue("@commentid", commentid);
             cmd2.Parameters.AddWithValue("@userid", userid);
 
@@ -337,6 +371,9 @@ namespace Brogrammer.Controller
 
             return i;
         }
+
+
+        
 
     }
 

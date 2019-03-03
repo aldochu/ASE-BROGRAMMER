@@ -105,7 +105,7 @@ namespace Brogrammer
 
             if (PostSystem.Checkvote(id, a.id)==0)
             { 
-                PostSystem.Upvote(id,a.id);
+                PostSystem.Upvote(p.id,id, a.id);
             Response.Write("<script type=\"text/javascript\">alert('Upvoted!');location.href='DisplayPost.aspx'</script>");
             }else
                 AlertPopup.Show();
@@ -123,7 +123,7 @@ namespace Brogrammer
 
             if (PostSystem.Checkvote(id, a.id) == 0)
             {
-                PostSystem.Downvote(id, a.id);
+                PostSystem.Downvote(p.id,id, a.id);
                 Response.Write("<script type=\"text/javascript\">alert('Downvoted!');location.href='DisplayPost.aspx'</script>");
             }
             else
@@ -154,23 +154,9 @@ namespace Brogrammer
 
         protected void btnDeletepost_click(object sender, EventArgs e)
         {
-            comment c = new comment();
+            
 
-            Button button = (Button)sender;
-            GridViewRow row = (GridViewRow)button.NamingContainer;
-            int i = Convert.ToInt32(row.RowIndex);
-
-            System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
-            System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
-            c.commentid = lblID.Text; //this is comment ID
-            c.content = txtContent.Text;
-
-
-
-
-            Session["Comment"] = c; //saving comment id into session
-
-            Response.Write("<script type=\"text/javascript\">alert('Downvoted!');location.href='DisplayPost.aspx'</script>");
+            Response.Write("<script type=\"text/javascript\">alert('Post Deleted! Redirct to homepage');location.href='HomePage.aspx'</script>");
 
         }
         
