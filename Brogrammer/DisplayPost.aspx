@@ -43,6 +43,13 @@
 			margin-right: auto;
     	}
 
+		.Edit
+
+{
+
+background-color:cadetblue;
+}
+
   .tableStyle {
             margin-left: auto;
             margin-right: auto;
@@ -118,37 +125,38 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                             <asp:Label ID="lblUID" runat="server" Text='<%# Eval("UID") %>'></asp:Label>
                         </ItemTemplate>	
                     </asp:TemplateField>
-					<asp:TemplateField  HeaderText="Name">
+					<asp:TemplateField  HeaderText="Name" HeaderStyle-Font-Size="6">
                         <ItemTemplate>
                             <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Comment" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
 							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/2)%>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnUpdate" runat="server" Text="Up" OnClick="btnUpVote" CssClass="btn btn-dark" />
+							<asp:Button ID="btnEditComment" Font-Size="6" runat="server" Text="Edit Comment" OnClick="btnEditComment" visible='<%# (Convert.ToString(Eval("UID"))==a.id)%>' CssClass="btn btn-success" />
+                            <asp:Button ID="btnUpvote" runat="server" Text="Up" OnClick="btnUpVote" visible='<%# (Convert.ToString(Eval("UID"))!=a.id)%>' CssClass="btn btn-dark" />
                         </ItemTemplate>
                     </asp:TemplateField>
-					<asp:TemplateField>
+					<asp:TemplateField HeaderText="Upvote" HeaderStyle-Font-Size="6">
                         <ItemTemplate>
                             <asp:Label ID="lblupvote" runat="server" Width="20px" Text='<%# Eval("Upvote") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnDelete" runat="server" Text="Down" OnClick="btnDownVote" CssClass="btn btn-danger"/>
+                            <asp:Button ID="btnDelete" runat="server" Text="Down" OnClick="btnDownVote" visible='<%# (Convert.ToString(Eval("UID"))!=a.id)%>' CssClass="btn btn-danger"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-					<asp:TemplateField>
+					<asp:TemplateField HeaderText="Downvote" HeaderStyle-Font-Size="6">
                         <ItemTemplate>
                             <asp:Label ID="lblDownvote" runat="server"  Width="20px" Text='<%# Eval("Downvote") %>'></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>
-					<asp:TemplateField  HeaderText="Date">
+                    </asp:TemplateField >
+					<asp:TemplateField  HeaderText="Date" HeaderStyle-Font-Size="6">
                         <ItemTemplate>
                             <asp:Label ID="lblDate" runat="server" Width="60px" Text='<%# Eval("Date") %>'></asp:Label>
                         </ItemTemplate>

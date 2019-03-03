@@ -129,6 +129,28 @@ namespace Brogrammer
                 AlertPopup.Show();
         }
 
+        protected void btnEditComment(object sender, EventArgs e)
+        {
+            comment c = new comment();
+
+            Button button = (Button)sender;
+            GridViewRow row = (GridViewRow)button.NamingContainer;
+            int i = Convert.ToInt32(row.RowIndex);
+
+            System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
+            System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
+            c.commentid = lblID.Text; //this is comment ID
+            c.content = txtContent.Text;
+
+
+
+
+            Session["Comment"] = c; //saving comment id into session
+
+                Response.Write("<script type=\"text/javascript\">alert('Downvoted!');location.href='DisplayPost.aspx'</script>");
+
+        }
+        
 
 
         protected void create_Click(object sender, EventArgs e)
