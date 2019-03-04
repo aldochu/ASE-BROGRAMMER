@@ -25,8 +25,7 @@
             }
 
         #fav-container {
-            background-color: grey;
-            color: white;
+            color: black;
             float: left;
             align-content: center;
             width: 500px;
@@ -50,44 +49,45 @@
         <div id="schl-container">
             <h1><a href="www.google.com.sg" target="_self">SCSE</a></h1>
         </div>
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
 
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+
+        <ContentTemplate>
         <div id="fav-container">
+            <asp:GridView ID="favGridView" AutoGenerateColumns="false" runat="server" CellPadding="10" GridLines="Horizontal" Width="100%" Height="100%" CssClass="table table-hover" OnRowCommand="favGridView_delete">
+                <Columns>
+                    <asp:BoundField DataField="uid"
+                        ReadOnly="true"
+                        HeaderText="User"
+                        ItemStyle-Wrap="False" />
+                    <asp:BoundField
+                        ReadOnly="true"
+                        HeaderText="Title of Post"
+                        ItemStyle-Wrap="False" />
+                    <asp:BoundField DataField="post.date"
+                        ConvertEmptyStringToNull="true"
+                        HeaderText="Date of Post"
+                        ItemStyle-Wrap="False" />
+                    <asp:BoundField DataField="date"
+                        ConvertEmptyStringToNull="true"
+                        HeaderText="Added On"
+                        ItemStyle-Wrap="False" />
+                    
+                    <asp:TemplateField>
+                       <ItemTemplate>
+                           <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("id") %>'/>
+                       </ItemTemplate>
+                    
+                    </asp:TemplateField>
 
-            <asp:Repeater ID="favPostsRepeater" runat="server">
-
-                <HeaderTemplate>
-                    <table id="favPostsTB" class="table table-hover">
-                        <tr>
-                            <th>User</th>
-                            <th>Title of Post</th>
-                            <th>Date of Post</th>
-                            <th>Added On</th>
-                        </tr>
-                </HeaderTemplate>
-
-                <ItemTemplate>
-                    <tr>
-                        <td>
-                            <%# Eval("uid") %>
-                        </td>
-                        <td>
-                            <a href="~/ViewPost.aspx?pid<%# Eval("post.id") %>"><%# Eval("post.title") %></a>
-                        </td>
-                        <td>
-                            <%# Eval("post.date") %>
-                        </td>
-                        <td>
-                            <%# Eval("date") %>
-                        </td>
-                    </tr>
-                </ItemTemplate>
-
-                <FooterTemplate>
-                    </table>
-                </FooterTemplate>
-            </asp:Repeater>
-
+                </Columns>
+                    
+            </asp:GridView>
         </div>
+            </ContentTemplate>
+            </asp:UpdatePanel>
 
         <%--
         <div id="recent-container">

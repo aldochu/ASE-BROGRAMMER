@@ -189,6 +189,7 @@ namespace Brogrammer.Controller
             return dt;
         }
 
+        // Retrieve all favourited posts for current user
         public static List<fpost> GetFavPosts(string uid)
         {
 
@@ -228,6 +229,26 @@ namespace Brogrammer.Controller
             conn.Close();
 
             return list;
+        }
+
+        public static bool RemoveFavPost(string uid, int postid)
+        {
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "DELETE FROM fav WHERE fav.uid = @uid AND fav.id = @id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@uid", uid);
+            cmd.Parameters.AddWithValue("@id", postid);
+
+            conn.Open();
+            int affectedRows = 0;
+            affectedRows = cmd.ExecuteNonQuery();
+            conn.Close();
+
+            return affectedRows == 1 ? true : false;
         }
 
         public static int DeletePost(post p)
