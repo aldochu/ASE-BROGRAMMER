@@ -35,18 +35,63 @@ namespace Brogrammer.Controller
             return result;
         }
 
-        public static post GetPost(string id, string uid)
+        public static int updatePost(post p)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+
+
+            string query = "UPDATE post SET title = @title, content=@content, file=@file WHERE id=@id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", p.id);
+            cmd.Parameters.AddWithValue("@title", p.title);
+            cmd.Parameters.AddWithValue("@content", p.content);
+            cmd.Parameters.AddWithValue("@file", p.file);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
+        public static int updateComment(comment c)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+
+
+            string query = "UPDATE comment SET content = @content WHERE commentid=@id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", c.commentid);
+            cmd.Parameters.AddWithValue("@content", c.content);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
+        public static post GetPost(string id)
         {
             post p = new post();
 
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM post WHERE id=@id AND uid=@uid";
+            string query = "SELECT * FROM post WHERE id=@id";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@uid", uid);
 
             conn.Open();
             var reader = cmd.ExecuteReader();
@@ -104,7 +149,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM post";
+            string query = "SELECT * FROM comment";
 
 
             var cmd = new MySqlCommand(query, conn);
@@ -113,9 +158,14 @@ namespace Brogrammer.Controller
 
 
             DataTable dt = new DataTable();
-            dt.Columns.Add("id");
+            dt.Columns.Add("cid");
             dt.Columns.Add("uid");
+            dt.Columns.Add("name");
             dt.Columns.Add("content");
+            dt.Columns.Add("upvote");
+            dt.Columns.Add("downvote");
+            dt.Columns.Add("endorseby");
+            dt.Columns.Add("date");
 
 
             int i = 0;
@@ -125,10 +175,14 @@ namespace Brogrammer.Controller
             {
 
                 dt.Rows.Add();
-                dt.Rows[i]["id"] = reader["id"].ToString();
-                dt.Rows[i]["uid"] = reader["uid"].ToString();
+                dt.Rows[i]["cid"] = reader["commentid"].ToString();
+                dt.Rows[i]["uid"] = reader["userid"].ToString();
+                dt.Rows[i]["name"] = reader["name"].ToString();
                 dt.Rows[i]["content"] = reader["content"].ToString();
-
+                dt.Rows[i]["upvote"] = reader["upvote"].ToString();
+                dt.Rows[i]["downvote"] = reader["downvote"].ToString();
+                dt.Rows[i]["endorseby"] = reader["endorseby"].ToString();
+                dt.Rows[i]["date"] = reader["date"].ToString();
                 i++;
 
             }
@@ -175,6 +229,151 @@ namespace Brogrammer.Controller
 
             return list;
         }
+
+        public static int DeletePost(post p)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            //delete votingrec 1st
+            string query = "DELETE FROM votingrec WHERE postid=@id";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", p.id);
+
+            //delete comment 2nd
+            query = "DELETE FROM comment WHERE postid=@id";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@id", p.id);
+
+            //delete post lastly
+            query = "DELETE FROM post WHERE id=@id";
+            var cmd3 = new MySqlCommand(query, conn);
+            cmd3.Parameters.AddWithValue("@id", p.id);
+
+            conn.Open();
+
+            cmd.ExecuteNonQuery();
+            cmd2.ExecuteNonQuery();
+            result = cmd3.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
+
+        /////////////////////////////////////////////////////////THIS SECTION FOR COMMENT FUNCTION////////////////////////////////////////////
+        public static int createComment(comment c)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "INSERT into comment (commentid,postid,userid,name,content,date) VALUES (@commentid,@postid,@userid,@name,@content,@date)";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@commentid", c.commentid);
+            cmd.Parameters.AddWithValue("@postid", c.postid);
+            cmd.Parameters.AddWithValue("@userid", c.userid);
+            cmd.Parameters.AddWithValue("@name", c.name);
+            cmd.Parameters.AddWithValue("@content", c.content);
+            cmd.Parameters.AddWithValue("@date", c.date);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
+        public static int Upvote(string postid, string commentid, string userid)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "UPDATE comment SET upvote = upvote + 1 where commentid=@commentid";
+
+            //this is to increment the vote
+            var cmd = new MySqlCommand(query, conn); 
+            cmd.Parameters.AddWithValue("@commentid", commentid);
+
+
+            //this is to create record into table so user can't vote again
+            query = "INSERT into votingrec (postid,commentid,uid) VALUES (@postid,@commentid,@userid)";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@postid", postid);
+            cmd2.Parameters.AddWithValue("@commentid", commentid);
+            cmd2.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            cmd2.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+
+
+            conn.Close();
+            return result;
+        }
+
+        public static int Downvote(string postid, string commentid, string userid)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "UPDATE comment SET downvote = downvote - 1 where commentid=@commentid";
+
+            //this is to increment the vote
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@commentid", commentid);
+
+
+            //this is to create record into table so user can't vote again
+            query = "INSERT into votingrec (postid,commentid,uid) VALUES (@postid,@commentid,@userid)";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@postid", postid);
+            cmd2.Parameters.AddWithValue("@commentid", commentid);
+            cmd2.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            cmd2.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+
+
+            conn.Close();
+            return result;
+        }
+
+        public static int Checkvote(string commentid, string userid)
+        {
+            int i=0;
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT * FROM votingrec WHERE commentid=@cid AND uid=@uid";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@cid", commentid);
+            cmd.Parameters.AddWithValue("@uid", userid);
+
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                i++;
+            }
+            conn.Close();
+
+            return i;
+        }
+
+
+        
 
     }
 
