@@ -19,10 +19,10 @@
             text-align: center;
         }
 
-            #schl-container > h1 > a {
-                color: yellow;
-                text-decoration: none;
-            }
+        #schl-container > h1 > a {
+            color: yellow;
+            text-decoration: none;
+        }
 
         #fav-container {
             color: black;
@@ -49,45 +49,46 @@
         <div id="schl-container">
             <h1><a href="www.google.com.sg" target="_self">SCSE</a></h1>
         </div>
+
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <div id="fav-container">
+                    <asp:GridView ID="favGridView" AutoGenerateColumns="false" runat="server" CellPadding="10" GridLines="Horizontal" Width="100%" Height="100%" CssClass="table table-hover" OnRowCommand="favGridView_delete">
+                        
+                        <Columns>
 
-        <ContentTemplate>
-        <div id="fav-container">
-            <asp:GridView ID="favGridView" AutoGenerateColumns="false" runat="server" CellPadding="10" GridLines="Horizontal" Width="100%" Height="100%" CssClass="table table-hover" OnRowCommand="favGridView_delete">
-                <Columns>
-                    <asp:BoundField DataField="uid"
-                        ReadOnly="true"
-                        HeaderText="User"
-                        ItemStyle-Wrap="False" />
-                    <asp:BoundField
-                        ReadOnly="true"
-                        HeaderText="Title of Post"
-                        ItemStyle-Wrap="False" />
-                    <asp:BoundField DataField="post.date"
-                        ConvertEmptyStringToNull="true"
-                        HeaderText="Date of Post"
-                        ItemStyle-Wrap="False" />
-                    <asp:BoundField DataField="date"
-                        ConvertEmptyStringToNull="true"
-                        HeaderText="Added On"
-                        ItemStyle-Wrap="False" />
-                    
-                    <asp:TemplateField>
-                       <ItemTemplate>
-                           <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("id") %>'/>
-                       </ItemTemplate>
-                    
-                    </asp:TemplateField>
+                            <asp:BoundField DataField="uid"
+                                ReadOnly="true"
+                                HeaderText="User"
+                                ItemStyle-Wrap="False" />
+                            <asp:BoundField
+                                ReadOnly="true"
+                                HeaderText="Title of Post"
+                                ItemStyle-Wrap="False" />
+                            <asp:BoundField DataField="post.date"
+                                ConvertEmptyStringToNull="true"
+                                HeaderText="Date of Post"
+                                ItemStyle-Wrap="False" />
+                            <asp:BoundField DataField="date"
+                                ConvertEmptyStringToNull="true"
+                                HeaderText="Added On"
+                                ItemStyle-Wrap="False" />
 
-                </Columns>
-                    
-            </asp:GridView>
-        </div>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("id") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                        </Columns>
+
+                    </asp:GridView>
+                </div>
             </ContentTemplate>
-            </asp:UpdatePanel>
+        </asp:UpdatePanel>
 
         <%--
         <div id="recent-container">

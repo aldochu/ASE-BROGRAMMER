@@ -189,7 +189,7 @@ namespace Brogrammer.Controller
             return dt;
         }
 
-        // Retrieve all favourited posts for current user
+        /////////////////////////////////////////////////////////START SECTION FOR FAVOURITE FUNCTION////////////////////////////////////////////
         public static List<fpost> GetFavPosts(string uid)
         {
 
@@ -250,6 +250,8 @@ namespace Brogrammer.Controller
 
             return affectedRows == 1 ? true : false;
         }
+
+        /////////////////////////////////////////////////////////END SECTION FOR FAVOURITE FUNCTION////////////////////////////////////////////
 
         public static int DeletePost(post p)
         {
@@ -393,9 +395,68 @@ namespace Brogrammer.Controller
             return i;
         }
 
+        /////////////////////////////////////////////////////////START SECTION FOR NOTIFICATIONS FUNCTION////////////////////////////////////////////
+        public static List<notification> GetNotifications(string uid)
+        {
 
-        
+            List<notification> list = new List<notification>();
 
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT commentid, title, userid, brogrammer.comment.content, brogrammer.comment.flaggednotified FROM brogrammer.post, brogrammer.comment " +
+                "WHERE brogrammer.comment.postid = brogrammer.post.id AND brogrammer.comment.userid = @uid AND brogrammer.comment.flaggednotified = @notified " +
+                "GROUP BY brogrammer.comment.commentid";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@uid", uid);
+            cmd.Parameters.AddWithValue("@notified", 0);
+
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                notification notification = new notification();
+                notification.commentid = reader["commentid"].ToString();
+                notification.title = reader["title"].ToString();
+                notification.content = reader["content"].ToString();
+                notification.userid = reader["userid"].ToString();
+                notification.flaggednotified = Convert.ToInt16(reader["flaggednotified"].ToString());
+                list.Add(notification);
+
+            }
+
+            reader.Dispose();
+
+            conn.Close();
+
+            return list;
+        }
+
+        public static void clearNotification (string commentid, string userid)
+        {
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "UPDATE comment SET flaggednotified = @clearflag where commentid = @commentid AND userid = @uid";
+
+            //this is to increment the vote
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@clearFlag", 1);
+            cmd.Parameters.AddWithValue("@commentid", commentid);
+            cmd.Parameters.AddWithValue("uid", userid);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+     
+            conn.Close();
+
+            /////////////////////////////////////////////////////////END SECTION FOR NOTIFICATIONS FUNCTION////////////////////////////////////////////
+        }
+
+   
     }
 
 }
