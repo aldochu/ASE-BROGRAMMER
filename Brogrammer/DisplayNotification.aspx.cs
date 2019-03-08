@@ -39,7 +39,7 @@ namespace Brogrammer
                 case "View_Post":
                     string selectedCommentID = e.CommandArgument.ToString();
 
-                    PostSystem.clearNotification(selectedCommentID, uid);
+                    PostSystem.ClearNotification(selectedCommentID, uid);
 
                     // to direct user to the exact comment record on the page of the post
                     display_Notifications(uid);

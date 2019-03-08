@@ -304,8 +304,18 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("@content", c.content);
             cmd.Parameters.AddWithValue("@date", c.date);
 
+            // set the notified flag of all comments within the post
+            // flaggednotified = 0 means there is an outstanding notification
+            query = "UPDATE comment SET flaggednotified = 0 WHERE postid = @postid AND commentid <> @commentid";
+            var cmd1 = new MySqlCommand(query, conn);
+            cmd1.Parameters.AddWithValue("@postid", c.postid);
+            cmd1.Parameters.AddWithValue("@commentid", c.commentid);
+
             conn.Open();
+
+
             result = cmd.ExecuteNonQuery();
+            cmd1.ExecuteNonQuery();
 
             conn.Close();
             return result;
@@ -434,7 +444,7 @@ namespace Brogrammer.Controller
             return list;
         }
 
-        public static void clearNotification (string commentid, string userid)
+        public static void ClearNotification (string commentid, string userid)
         {
 
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
