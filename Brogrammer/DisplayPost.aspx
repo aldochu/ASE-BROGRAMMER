@@ -100,16 +100,23 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 				<td class="auto-style2">	
 					Date of Post:<asp:Label ID="lblDate" runat="server"></asp:Label>	
 					<%if (p.uid == a.id){%>
-					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnEditComment" CssClass="btn btn-dark" />
+					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnUpdatepost_click" CssClass="btn btn-dark" />
 					<%}%>
 					<%if (role == "admin"){%>
 					<asp:Button ID="Button1" runat="server" Text="Delete" OnClick="btnDeletepost_click" CssClass="btn btn-danger" />
 					<%}%>
+					<%if (p.uid != a.id && role == "student"){%>
+					<asp:Button ID="Button3" runat="server" Text="Fav" OnClick="btnFavpost_click" CssClass="btn btn-dark" />
+					<%}%>
+
 				</td>	
 			</tr>
 		</table>
 		</div>
 
+
+	<%if (role == "student")
+		{%>
 	<div class="Post">
 		<h1 class="font_style_one mb-3 mt-2 text-center">Comments</h1>
 		<table class="tableStyle" >
@@ -170,6 +177,58 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 				</tr>
 			</table>
 			</div>
+	<%} %>
+
+
+	<%if (role != "student"){ %>
+	<div class="Post">
+		<h1 class="font_style_one mb-3 mt-2 text-center">Comments</h1>
+		<table class="tableStyle" >
+			<tr>
+				<td>
+					 <asp:GridView ID="grdAllCom2" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px">
+                		 <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:TemplateField HeaderText="CID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("CID") %>'></asp:Label>
+                        </ItemTemplate>	
+                    </asp:TemplateField>
+					<asp:TemplateField HeaderText="UID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblUID" runat="server" Text='<%# Eval("UID") %>'></asp:Label>
+                        </ItemTemplate>	
+                    </asp:TemplateField>
+					<asp:TemplateField  HeaderText="Name" HeaderStyle-Font-Size="6">
+                        <ItemTemplate>
+                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center">
+                        <ItemTemplate>
+							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/2)%>' ReadOnly="true"></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+					<asp:TemplateField>
+                        <ItemTemplate>
+							<asp:Button ID="btnEndorseComment" Font-Size="6" runat="server" Text="Endorse Comment" OnClick="btnEndorseComment" visible='<%# (role != "admin")%>' CssClass="btn btn-success" />
+							<asp:Button ID="btnDeleteComment" Font-Size="6" runat="server" Text="Delete Comment" OnClick="btnDeleteComment" visible='<%# (role == "admin")%>' CssClass="btn btn-danger" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+					<asp:TemplateField  HeaderText="Date" HeaderStyle-Font-Size="6">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDate" runat="server" Width="60px" Text='<%# Eval("Date") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+					</td>
+				</tr>
+			</table>
+			</div>
+
+
+	<%} %>
 
 
 
@@ -189,8 +248,8 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 			</tr>	
 			<tr>
 				<td style="padding-left:33%">Comment as:&nbsp;&nbsp;&nbsp;
-					<asp:RadioButton id="id" runat="server" Text="ID" GroupName="measurementSystem" Checked="true"></asp:RadioButton>ID &nbsp;
-					<asp:RadioButton id="anon" runat="server" Text="Anon" GroupName="measurementSystem"></asp:RadioButton>Anon
+					<asp:RadioButton id="id" runat="server" Text="ID" GroupName="measurementSystem" Checked="true"></asp:RadioButton>&nbsp; &nbsp;
+					<asp:RadioButton id="anon" runat="server" Text="Anon" GroupName="measurementSystem"></asp:RadioButton>
 				</td>
 			</tr>
 			<tr>
@@ -204,7 +263,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 		<cc1:modalpopupextender id="AlertPopup" runat="server" popupcontrolid="Panel2" targetcontrolid="HiddenField1" cancelcontrolid="btnNo" backgroundcssclass="modalBackground"></cc1:modalpopupextender>
         <asp:Panel ID="Panel2" runat="server" CssClass="modalPopup1" align="center" Style="display: none">
-            <asp:Label ID="Label3" runat="server" Text="Voting failed, you have already voted       " Visible="true"></asp:Label><br />
+            <asp:Label ID="warningtext" runat="server" Text="Voting failed, you have already voted       " Visible="true"></asp:Label><br />
             <br />
             <asp:Label ID="lbl_id" runat="server" Text="" Visible="false"></asp:Label>
             <asp:Button ID="btnNo" runat="server" Text="Okay"/>

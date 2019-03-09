@@ -59,27 +59,45 @@ namespace Brogrammer.Controller
             return result;
         }
 
-        public static int updateComment(comment c)
+        public static int DeletePost(String postid)
         {
             int result = 0;
+
+            //need to delete records from votingrec, comment, fav, post
 
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-
-
-            string query = "UPDATE comment SET content = @content WHERE commentid=@id";
-
+            //delete fav
+            string query = "DELETE FROM fav WHERE pid = @pid";
             var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@id", c.commentid);
-            cmd.Parameters.AddWithValue("@content", c.content);
+            cmd.Parameters.AddWithValue("@pid", postid);
+
+            //delete votingrec
+            query = "DELETE FROM votingrec WHERE postid = @pid";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@pid", postid);
+
+            //delete comment
+            query = "DELETE FROM comment WHERE postid = @pid";
+            var cmd3 = new MySqlCommand(query, conn);
+            cmd3.Parameters.AddWithValue("@pid", postid);
+
+            //delete post
+            query = "DELETE FROM post WHERE id = @pid";
+            var cmd4 = new MySqlCommand(query, conn);
+            cmd4.Parameters.AddWithValue("@pid", postid);
+
 
             conn.Open();
             result = cmd.ExecuteNonQuery();
-
+            result = cmd2.ExecuteNonQuery();
+            result = cmd3.ExecuteNonQuery();
+            result = cmd4.ExecuteNonQuery();
             conn.Close();
             return result;
         }
+
 
         public static post GetPost(string id)
         {
@@ -251,39 +269,58 @@ namespace Brogrammer.Controller
             return affectedRows == 1 ? true : false;
         }
 
-        /////////////////////////////////////////////////////////END SECTION FOR FAVOURITE FUNCTION////////////////////////////////////////////
 
-        public static int DeletePost(post p)
+        public static int createFav(fpost p, String postid)
         {
             int result = 0;
 
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            //delete votingrec 1st
-            string query = "DELETE FROM votingrec WHERE postid=@id";
+            string query = "INSERT into fav (date,uid,pid) VALUES (@date,@userid,@postid)";
+
             var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@id", p.id);
-
-            //delete comment 2nd
-            query = "DELETE FROM comment WHERE postid=@id";
-            var cmd2 = new MySqlCommand(query, conn);
-            cmd2.Parameters.AddWithValue("@id", p.id);
-
-            //delete post lastly
-            query = "DELETE FROM post WHERE id=@id";
-            var cmd3 = new MySqlCommand(query, conn);
-            cmd3.Parameters.AddWithValue("@id", p.id);
+            cmd.Parameters.AddWithValue("@date", p.date);
+            cmd.Parameters.AddWithValue("@userid", p.uid);
+            cmd.Parameters.AddWithValue("@postid", postid);
+        
 
             conn.Open();
 
-            cmd.ExecuteNonQuery();
-            cmd2.ExecuteNonQuery();
-            result = cmd3.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
 
             conn.Close();
             return result;
         }
+
+        public static int Checkfav(string postid, string userid)
+        {
+            int i = 0;
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT * FROM fav WHERE pid=@pid AND uid=@uid";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@pid", postid);
+            cmd.Parameters.AddWithValue("@uid", userid);
+
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                i++;
+            }
+            conn.Close();
+
+            return i;
+        }
+
+
+        /////////////////////////////////////////////////////////END SECTION FOR FAVOURITE FUNCTION////////////////////////////////////////////
+
+
 
 
         /////////////////////////////////////////////////////////THIS SECTION FOR COMMENT FUNCTION////////////////////////////////////////////
@@ -403,6 +440,56 @@ namespace Brogrammer.Controller
             conn.Close();
 
             return i;
+        }
+
+        public static int updateComment(comment c)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+
+
+            string query = "UPDATE comment SET content = @content WHERE commentid=@id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", c.commentid);
+            cmd.Parameters.AddWithValue("@content", c.content);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
+        public static int deleteComment(comment c)
+        {
+            int result = 0;
+
+            //need to delete records from votingrec, comment
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            //delete fav
+            string query = "DELETE FROM votingrec WHERE commentid = @id";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", c.commentid);
+
+            //delete votingrec
+            query = "DELETE FROM comment WHERE commentid = @id";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@id", c.commentid);
+
+
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+            result = cmd2.ExecuteNonQuery();
+            conn.Close();
+            return result;
         }
 
         /////////////////////////////////////////////////////////START SECTION FOR NOTIFICATIONS FUNCTION////////////////////////////////////////////
