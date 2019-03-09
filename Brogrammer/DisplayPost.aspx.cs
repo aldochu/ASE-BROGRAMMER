@@ -21,10 +21,10 @@ namespace Brogrammer
         {
 
             //for testing purposes
-            a.id = "user12";
-            a.name = "stud12";
+            a.id = "prof";
+            a.name = "stud3123";
             Session["Account"] = a; //saving to session
-            Session["ROLE"] = "prof";
+            Session["ROLE"] = "student";
             Session["POST"] = "user1230220191627";
             /////////////////
 
@@ -212,39 +212,21 @@ namespace Brogrammer
         protected void btnEndorseComment(object sender, EventArgs e)
         {
 
-            bool check = true;
+            comment c = new comment();
 
-            lblTitle.Text = lblContent.Text = "";
+            Button button = (Button)sender;
+            GridViewRow row = (GridViewRow)button.NamingContainer;
+            int i = Convert.ToInt32(row.RowIndex);
 
-            if (Validation.isEmpty(txtContent.Text))
-            {
-                lblContent.Text = "Comment cannot be empty";
-                check = false;
-            }
+            System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
+            System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
+            c.commentid = lblID.Text; //this is comment ID
+            c.endorseby = a.name; //since this function can only be call by prof, so the current user is prof
 
 
+            PostSystem.Endorse(c);
 
-            if (check == true)
-            {
-                comment c = new comment();
-
-                c.commentid = DateTime.Now.ToString("ddMMyyyyHHmm");
-                c.postid = p.id;
-                c.userid = a.id;
-                if (id.Checked == true)
-                {
-                    c.name = a.name;
-                }
-                else
-                    c.name = "Anon";
-                c.content = txtContent.Text;
-                c.date = DateTime.Now;
-
-                PostSystem.createComment(c);
-
-                Response.Write("<script type=\"text/javascript\">alert('Comment added');location.href='DisplayPost.aspx'</script>");
-
-            }
+            Response.Write("<script type=\"text/javascript\">alert('Comment Endorsed!');location.href='DisplayPost.aspx'</script>");
 
         }
 
@@ -268,7 +250,7 @@ namespace Brogrammer
             {
                 comment c = new comment();
 
-                c.commentid = DateTime.Now.ToString("ddMMyyyyHHmm");
+                c.commentid = DateTime.Now.ToString("ddMMyyyyHHmmss");
                 c.postid = p.id;
                 c.userid = a.id;
                 if (id.Checked == true)

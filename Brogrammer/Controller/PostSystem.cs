@@ -135,7 +135,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM post WHERE uid=@uid";
+            string query = "SELECT * FROM post WHERE uid=@uid ";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@uid", uid);
@@ -162,50 +162,7 @@ namespace Brogrammer.Controller
             return list;
         }
 
-        public static DataTable getAllCom()
-        {
-            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
-            var conn = new MySqlConnection(dbConnectionString);
-
-            string query = "SELECT * FROM comment";
-
-
-            var cmd = new MySqlCommand(query, conn);
-            conn.Open();
-            var reader = cmd.ExecuteReader();
-
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("cid");
-            dt.Columns.Add("uid");
-            dt.Columns.Add("name");
-            dt.Columns.Add("content");
-            dt.Columns.Add("upvote");
-            dt.Columns.Add("downvote");
-            dt.Columns.Add("endorseby");
-            dt.Columns.Add("date");
-
-
-            int i = 0;
-
-
-            while (reader.Read())
-            {
-
-                dt.Rows.Add();
-                dt.Rows[i]["cid"] = reader["commentid"].ToString();
-                dt.Rows[i]["uid"] = reader["userid"].ToString();
-                dt.Rows[i]["name"] = reader["name"].ToString();
-                dt.Rows[i]["content"] = reader["content"].ToString();
-                dt.Rows[i]["upvote"] = reader["upvote"].ToString();
-                dt.Rows[i]["downvote"] = reader["downvote"].ToString();
-                dt.Rows[i]["endorseby"] = reader["endorseby"].ToString();
-                dt.Rows[i]["date"] = reader["date"].ToString();
-                i++;
-
-            }
-            return dt;
-        }
+       
 
         /////////////////////////////////////////////////////////START SECTION FOR FAVOURITE FUNCTION////////////////////////////////////////////
         public static List<fpost> GetFavPosts(string uid)
@@ -324,6 +281,51 @@ namespace Brogrammer.Controller
 
 
         /////////////////////////////////////////////////////////THIS SECTION FOR COMMENT FUNCTION////////////////////////////////////////////
+        public static DataTable getAllCom()
+        {
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT * FROM comment ORDER BY endorseby IS NOT NULL DESC, upvote DESC";
+
+
+            var cmd = new MySqlCommand(query, conn);
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("cid");
+            dt.Columns.Add("uid");
+            dt.Columns.Add("name");
+            dt.Columns.Add("content");
+            dt.Columns.Add("upvote");
+            dt.Columns.Add("downvote");
+            dt.Columns.Add("endorseby");
+            dt.Columns.Add("date");
+
+
+            int i = 0;
+
+
+            while (reader.Read())
+            {
+
+                dt.Rows.Add();
+                dt.Rows[i]["cid"] = reader["commentid"].ToString();
+                dt.Rows[i]["uid"] = reader["userid"].ToString();
+                dt.Rows[i]["name"] = reader["name"].ToString();
+                dt.Rows[i]["content"] = reader["content"].ToString();
+                dt.Rows[i]["upvote"] = reader["upvote"].ToString();
+                dt.Rows[i]["downvote"] = reader["downvote"].ToString();
+                dt.Rows[i]["endorseby"] = reader["endorseby"].ToString();
+                dt.Rows[i]["date"] = reader["date"].ToString();
+                i++;
+
+            }
+            return dt;
+        }
+
         public static int createComment(comment c)
         {
             int result = 0;
@@ -456,6 +458,28 @@ namespace Brogrammer.Controller
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", c.commentid);
             cmd.Parameters.AddWithValue("@content", c.content);
+
+            conn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return result;
+        }
+
+        public static int Endorse(comment c)
+        {
+            int result = 0;
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+
+
+            string query = "UPDATE comment SET endorseby = @endorseby WHERE commentid=@id";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@id", c.commentid);
+            cmd.Parameters.AddWithValue("@endorseby", c.endorseby);
 
             conn.Open();
             result = cmd.ExecuteNonQuery();

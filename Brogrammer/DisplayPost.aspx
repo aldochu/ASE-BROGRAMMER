@@ -72,6 +72,20 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 }
 </script>
 
+	<script runat="server">
+
+  void CommentGridView_ChangeColor(Object sender, GridViewRowEventArgs e)
+  {
+        
+    if (Convert.ToString(DataBinder.Eval(e.Row.DataItem, "Endorseby")).Length > 3)
+    {
+        e.Row.BackColor =  System.Drawing.Color.Cornsilk;
+    }
+    
+  }
+
+</script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="Post">
@@ -122,7 +136,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 		<table class="tableStyle" >
 			<tr>
 				<td>
-					 <asp:GridView ID="grdAllCom" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px">
+					 <asp:GridView ID="grdAllCom" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px" onrowdatabound="CommentGridView_ChangeColor" >
                 		 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:TemplateField HeaderText="CID" Visible="false">
@@ -142,7 +156,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                     </asp:TemplateField>
                     <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/2)%>' ReadOnly="true"></asp:TextBox>
+							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/7)%>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
@@ -171,6 +185,11 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                             <asp:Label ID="lblDate" runat="server" Width="60px" Text='<%# Eval("Date") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
+					<asp:TemplateField  HeaderText="Endorsed" HeaderStyle-Font-Size="6">
+                        <ItemTemplate>
+                            <asp:Label ID="lblEndorse" runat="server" Width="60px" Text='<%# Eval("Endorseby") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
 					</td>
@@ -186,7 +205,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 		<table class="tableStyle" >
 			<tr>
 				<td>
-					 <asp:GridView ID="grdAllCom2" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px">
+					 <asp:GridView ID="grdAllCom2" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false"  OnPageIndexChanging="grdAllCom_PageIndexChanging" AllowPaging="True" PagerStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" EmptyDataRowStyle-HorizontalAlign="Center" BorderStyle="Solid" Width="200px" onrowdatabound="CommentGridView_ChangeColor">
                 		 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:TemplateField HeaderText="CID" Visible="false">
