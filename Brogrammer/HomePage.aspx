@@ -28,7 +28,7 @@
             color: black;
             float: left;
             align-content: center;
-            width: 500px;
+            width: 700px;
             margin-left: 100px;
             overflow-y: scroll;
             height: 200px;
@@ -56,9 +56,39 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <div id="fav-container">
-                    <asp:GridView ID="favGridView" AutoGenerateColumns="false" runat="server" CellPadding="10" GridLines="Horizontal" Width="100%" Height="100%" CssClass="table table-hover" OnRowCommand="favGridView_delete">
-                        
-                        <Columns>
+                    <asp:Repeater ID="favRepeater" runat="server" OnItemCommand="favPostsRepeater_ItemCommand">
+
+                        <HeaderTemplate>
+                            <table id="favPostsTB" class="table table-hover" style="width: 100%;">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Title of Post</th>
+                                    <th>Date of Post</th>
+                                    <th colspan="2">Added On</th>
+                                </tr>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr>
+                                <td>
+                                    <%# Eval("uid") %>
+                                </td>
+                                <td>
+                                    <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("post.id") %>'><%#truncateTitle(Eval("post.title").ToString())%></asp:LinkButton>
+                                </td>
+                                <td>
+                                    <%# Eval("post.date") %>
+                                </td>
+                                <td>
+                                    <%# Eval("date") %>
+                                </td>
+                                <td>
+                                    <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>' />
+
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <%--<Columns>
 
                             <asp:BoundField DataField="uid"
                                 ReadOnly="true"
@@ -83,9 +113,11 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                        </Columns>
-
-                    </asp:GridView>
+                        </Columns>--%>
+                        <FooterTemplate>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
@@ -106,7 +138,7 @@
 
         <div id="recent-container">
 
-            <asp:Repeater ID="recentPostsRepeater" runat="server">
+            <asp:Repeater ID="recentPostsRepeater" runat="server" OnItemCommand="recentPostsRepeater_ItemCommand">
 
                 <HeaderTemplate>
                     <table id="recentPostsTB" class="table table-hover">
@@ -123,7 +155,8 @@
                             <%# Eval("uid") %>
                         </td>
                         <td>
-                            <a href="~/ViewPost.aspx?pid<%# Eval("id") %>"><%# Eval("title") %></a>
+                            <%--<a href="~/ViewPost.aspx?pid<%# Eval("id") %>"><%# Eval("title") %></a>--%>
+                            <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("id") %>'><%# truncateTitle(Eval("title").ToString()) %></asp:LinkButton>
                         </td>
                         <td>
                             <%# Eval("date") %>

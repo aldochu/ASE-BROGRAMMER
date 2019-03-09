@@ -25,7 +25,7 @@ namespace Brogrammer
             a.name = "stud3123";
             Session["Account"] = a; //saving to session
             Session["ROLE"] = "student";
-            Session["POST"] = "user1230220191627";
+            //Session["POST"] = "user1230220191627";
             /////////////////
 
 

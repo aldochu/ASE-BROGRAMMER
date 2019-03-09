@@ -31,13 +31,13 @@ namespace Brogrammer {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// favGridView control.
+        /// favRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView favGridView;
+        protected global::System.Web.UI.WebControls.Repeater favRepeater;
         
         /// <summary>
         /// recentPostsRepeater control.

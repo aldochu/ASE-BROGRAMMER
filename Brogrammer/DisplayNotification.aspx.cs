@@ -36,13 +36,16 @@ namespace Brogrammer
 
             switch (e.CommandName.ToString())
             {
-                case "View_Post":
-                    string selectedCommentID = e.CommandArgument.ToString();
+                case "VIEW_POST":
+                    string selectedPostID = e.CommandArgument.ToString();
 
-                    PostSystem.ClearNotification(selectedCommentID, uid);
+                    PostSystem.ClearNotification(selectedPostID, uid);
 
                     // to direct user to the exact comment record on the page of the post
-                    display_Notifications(uid);
+                    //display_Notifications(uid);
+
+                    Session["POST"] = selectedPostID;
+                    Response.Redirect("DisplayPost.aspx");
 
                     //Response.Write("User selected: " + selectedCommentID);
                     break;

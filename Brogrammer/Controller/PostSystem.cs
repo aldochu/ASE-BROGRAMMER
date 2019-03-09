@@ -173,9 +173,8 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT fav.id AS fid, post.id AS pid, fav.uid AS uid, post.title AS title, post.date AS pdate, fav.date AS fdate " +
-                "FROM fav, post WHERE fav.uid = @uid AND fav.uid IN (SELECT brogrammer.post.uid FROM brogrammer.post) " +
-                "GROUP BY pid ORDER BY pdate DESC";
+            string query = "SELECT f.id AS fid, p.id AS pid, f.uid AS uid, p.title AS title, p.date AS pdate, f.date AS fdate " +
+                "FROM fav f INNER JOIN post p ON f.pid = p.id WHERE f.uid = @uid ORDER BY fdate DESC ";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@uid", uid);
@@ -525,7 +524,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT commentid, title, userid, brogrammer.comment.content, brogrammer.comment.flaggednotified FROM brogrammer.post, brogrammer.comment " +
+            string query = "SELECT id, commentid, title, userid, brogrammer.comment.content, brogrammer.comment.flaggednotified FROM brogrammer.post, brogrammer.comment " +
                 "WHERE brogrammer.comment.postid = brogrammer.post.id AND brogrammer.comment.userid = @uid AND brogrammer.comment.flaggednotified = @notified " +
                 "GROUP BY brogrammer.comment.commentid";
 
@@ -540,6 +539,7 @@ namespace Brogrammer.Controller
             {
                 notification notification = new notification();
                 notification.commentid = reader["commentid"].ToString();
+                notification.postid = reader["postid"].ToString();
                 notification.title = reader["title"].ToString();
                 notification.content = reader["content"].ToString();
                 notification.userid = reader["userid"].ToString();

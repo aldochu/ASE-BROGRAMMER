@@ -29,16 +29,9 @@ namespace Brogrammer
         {
             List<fpost> favPosts = PostSystem.GetFavPosts(user);
 
-            favGridView.DataSource = favPosts;
-            favGridView.DataBind();
+            favRepeater.DataSource = favPosts;
+            favRepeater.DataBind();
 
-            for (int i = 0; i < favGridView.Rows.Count; i++)
-            {
-                HyperLink hlContro = new HyperLink();
-                hlContro.NavigateUrl = "./newPage.aspx?ID=" + favPosts[i].post.id;
-                hlContro.Text = favPosts[i].post.title;
-                favGridView.Rows[i].Cells[1].Controls.Add(hlContro);
-            }
         }
 
         protected void displayRecentPosts(String userId)
@@ -49,23 +42,66 @@ namespace Brogrammer
             recentPostsRepeater.DataBind();
         }
 
-        protected void favGridView_delete(object sender, GridViewCommandEventArgs e)
+        protected string truncateTitle(String postTitle)
         {
-            //int selectedRow = e.RowIndex;
-            if (e.CommandName == "DeleteRow")
-            {
-                int selectedRow = Convert.ToInt32(e.CommandArgument);
-                bool result = PostSystem.RemoveFavPost(user, selectedRow);
+            return postTitle.Length >= 21? postTitle.Substring(0, 20) + "..." : postTitle;
+        }
 
-                if (result)
-                {
-                    displayFavPosts(user);
-                    //Response.Redirect("HomePage.aspx");
-                }
+        protected void favPostsRepeater_ItemCommand(object sender, RepeaterCommandEventArgs e)
+        {
+            switch (e.CommandName.ToString())
+            {
+                case "DELETE_ROW":
+                    int selectedPost = Convert.ToInt32(e.CommandArgument);
+
+                    bool result = PostSystem.RemoveFavPost(user, selectedPost);
+
+                    if (result)
+                    {
+                        displayFavPosts(user);
+                    }
+                    break;
+
+                case "VIEW_POST":
+                    string selectedPostID = e.CommandArgument.ToString();
+
+                    // to direct user to the exact comment record on the page of the post
+                    Session["POST"] = selectedPostID;
+                    Response.Redirect("DisplayPost.aspx");
+                    break;
+
             }
+            //if (e.CommandName == "DELETE_ROW")
+            //{
+            //    int selectedRow = Convert.ToInt32(e.CommandArgument);
+            //    bool result = PostSystem.RemoveFavPost(user, selectedRow);
+
+            //    if (result)
+            //    {
+            //        displayFavPosts(user);
+            //        //Response.Redirect("HomePage.aspx");
+            //    }
+            //}
             
         }
 
+        protected void recentPostsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            RepeaterItem item = e.Item;
 
+            switch (e.CommandName.ToString())
+            {
+                case "VIEW_POST":
+                    string selectedPostID = e.CommandArgument.ToString();
+
+                    // to direct user to the exact comment record on the page of the post
+                    Session["POST"] = selectedPostID;
+                    Response.Redirect("DisplayPost.aspx");
+
+                    //Response.Write("User selected: " + selectedCommentID);
+                    break;
+
+            }
+        }
     }
 }

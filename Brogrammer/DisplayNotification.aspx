@@ -26,8 +26,8 @@
 
                     <ItemTemplate>
 
-                        <asp:LinkButton ID="viewPost" runat="server" CssClass="list-group-item list-group-item-action flex-column align-items-start" CommandName="View_Post" 
-                            CommandArgument='<%# Eval("commentid") %>'>
+                        <asp:LinkButton ID="viewPost" runat="server" CssClass="list-group-item list-group-item-action flex-column align-items-start" CommandName="VIEW_POST" 
+                            CommandArgument='<%# Eval("postid") %>'>
                         
                             <div class="d-flex w-100 justify-content-between">
                                 <h4 class="mb-1">
