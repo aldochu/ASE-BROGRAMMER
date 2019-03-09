@@ -21,11 +21,11 @@ namespace Brogrammer
         {
 
             //for testing purposes
-            a.id = "user1";
-            a.name = "stud1";
+            a.id = "prof";
+            a.name = "stud3123";
             Session["Account"] = a; //saving to session
-            Session["ROLE"] = "admi2n";
-
+            Session["ROLE"] = "student";
+            Session["POST"] = "user1230220191627";
             /////////////////
 
 
@@ -48,7 +48,7 @@ namespace Brogrammer
         private void Get_and_Bind_Post() //this is to display the post on the page
         {
             //This line is a placeholder to get postID from session 1st
-            String postID = "user1230220191627";
+            String postID = (string)Session["POST"];
 
             p = PostSystem.GetPost(postID);//this is the session id
 
@@ -70,6 +70,9 @@ namespace Brogrammer
             grdAllCom.DataSource = PostSystem.getAllCom();
             grdAllCom.DataBind();
 
+            grdAllCom2.DataSource = PostSystem.getAllCom();
+            grdAllCom2.DataBind();
+
         }
 
         protected void grdAllCom_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -90,6 +93,26 @@ namespace Brogrammer
             Response.Redirect("EditPostPage.aspx"); //redirect
         }
 
+        
+        //this is to fav post
+        protected void btnFavpost_click(object sender, EventArgs e)
+        {
+            //check whether have already added fav for this post
+            if (PostSystem.Checkfav(p.id, a.id) == 0)
+            {
+                fpost f = new fpost();
+                f.id = a.id + p.id;
+                f.date = DateTime.Now;
+                f.uid = a.id;
+                PostSystem.createFav(f,p.id);
+                Response.Write("<script type=\"text/javascript\">alert('Post favorited!');location.href='DisplayPost.aspx'</script>");
+            }
+            else
+            {
+                warningtext.Text = "You have already favorite this post       ";
+                AlertPopup.Show();
+            }
+        }
 
 
         //this function is for upvote
@@ -103,12 +126,16 @@ namespace Brogrammer
             System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
             String id = lblID.Text; //this is comment ID
 
-            if (PostSystem.Checkvote(id, a.id)==0)
-            { 
-                PostSystem.Upvote(p.id,id, a.id);
-            Response.Write("<script type=\"text/javascript\">alert('Upvoted!');location.href='DisplayPost.aspx'</script>");
-            }else
+            if (PostSystem.Checkvote(id, a.id) == 0)
+            {
+                PostSystem.Upvote(p.id, id, a.id);
+                Response.Write("<script type=\"text/javascript\">alert('Upvoted!');location.href='DisplayPost.aspx'</script>");
+            }
+            else
+            {
+                warningtext.Text = "Voting failed, you have already voted for this comment       ";
                 AlertPopup.Show();
+            }
         }
 
         protected void btnDownVote(object sender, EventArgs e)
@@ -154,12 +181,54 @@ namespace Brogrammer
 
         protected void btnDeletepost_click(object sender, EventArgs e)
         {
-            
-
+            PostSystem.DeletePost(p.id);
             Response.Write("<script type=\"text/javascript\">alert('Post Deleted! Redirct to homepage');location.href='HomePage.aspx'</script>");
 
         }
+
+        protected void btnDeleteComment(object sender, EventArgs e)
+        {
+            comment c = new comment();
+
+            Button button = (Button)sender;
+            GridViewRow row = (GridViewRow)button.NamingContainer;
+            int i = Convert.ToInt32(row.RowIndex);
+
+            System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
+            System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
+            c.commentid = lblID.Text; //this is comment ID
+            c.content = txtContent.Text;
+
+
+
+            PostSystem.deleteComment(c);
+
+            Response.Write("<script type=\"text/javascript\">alert('Comment Deleted! Redirct to homepage');location.href='DisplayPost.aspx'</script>");
+
+        }
+
+        //THIS IS TO ENDORSE COMMENT
         
+        protected void btnEndorseComment(object sender, EventArgs e)
+        {
+
+            comment c = new comment();
+
+            Button button = (Button)sender;
+            GridViewRow row = (GridViewRow)button.NamingContainer;
+            int i = Convert.ToInt32(row.RowIndex);
+
+            System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
+            System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
+            c.commentid = lblID.Text; //this is comment ID
+            c.endorseby = a.name; //since this function can only be call by prof, so the current user is prof
+
+
+            PostSystem.Endorse(c);
+
+            Response.Write("<script type=\"text/javascript\">alert('Comment Endorsed!');location.href='DisplayPost.aspx'</script>");
+
+        }
 
         //THIS IS TO CREATE COMMENT
         protected void create_Click(object sender, EventArgs e)
@@ -181,7 +250,7 @@ namespace Brogrammer
             {
                 comment c = new comment();
 
-                c.commentid = DateTime.Now.ToString("ddMMyyyyHHmm");
+                c.commentid = DateTime.Now.ToString("ddMMyyyyHHmmss");
                 c.postid = p.id;
                 c.userid = a.id;
                 if (id.Checked == true)
