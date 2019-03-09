@@ -74,15 +74,24 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 	<script runat="server">
 
-  void CommentGridView_ChangeColor(Object sender, GridViewRowEventArgs e)
-  {
-        
-    if (Convert.ToString(DataBinder.Eval(e.Row.DataItem, "Endorseby")).Length > 3)
-    {
-        e.Row.BackColor =  System.Drawing.Color.Cornsilk;
-    }
-    
-  }
+		void CommentGridView_ChangeColor(Object sender, GridViewRowEventArgs e)
+		{
+			if (Convert.ToString(DataBinder.Eval(e.Row.DataItem, "Endorseby")).Length > 3)
+			{
+				e.Row.BackColor = System.Drawing.Color.Cornsilk;
+			}
+				
+
+		}
+
+		protected void changecolor(object sender, System.EventArgs e)
+		{
+			TextBox box = (TextBox)(sender);
+
+			if(Convert.ToString(Eval("Endorseby")).Length>3)
+				box.BackColor = System.Drawing.Color.Cornsilk;
+  
+		}
 
 </script>
 
@@ -156,7 +165,7 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                     </asp:TemplateField>
                     <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/7)%>' ReadOnly="true"></asp:TextBox>
+							<asp:TextBox OnDataBinding="changecolor" ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/7)%>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
