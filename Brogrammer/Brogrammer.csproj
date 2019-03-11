@@ -146,6 +146,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="Default.aspx" />
+    <Content Include="DisplayModulePage.aspx" />
     <Content Include="DisplayNotification.aspx" />
     <Content Include="DisplayPost.aspx" />
     <Content Include="EditCommentPage.aspx" />
@@ -161,6 +162,7 @@
     </Content>
     <Content Include="HomePage.aspx" />
     <Content Include="ListOfName.aspx" />
+    <Content Include="ListOfPost.aspx" />
     <Content Include="LoginPage.aspx" />
     <Content Include="lyGPA.png" />
     <Content Include="Master_Page.Master" />
@@ -206,6 +208,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controller\AccountManagement.cs" />
     <Compile Include="Controller\AccountVerificationSystem.cs" />
+    <Compile Include="Controller\ModuleSystem.cs" />
     <Compile Include="Controller\PostSystem.cs" />
     <Compile Include="Controller\Validation.cs" />
     <Compile Include="Default.aspx.cs">
@@ -214,6 +217,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayModulePage.aspx.cs">
+      <DependentUpon>DisplayModulePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DisplayModulePage.aspx.designer.cs">
+      <DependentUpon>DisplayModulePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="DisplayNotification.aspx.cs">
       <DependentUpon>DisplayNotification.aspx</DependentUpon>
@@ -264,6 +274,13 @@
     </Compile>
     <Compile Include="ListOfName.aspx.designer.cs">
       <DependentUpon>ListOfName.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListOfPost.aspx.cs">
+      <DependentUpon>ListOfPost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListOfPost.aspx.designer.cs">
+      <DependentUpon>ListOfPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="LoginPage.aspx.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
