@@ -6,10 +6,14 @@
     <style type="text/css">
         #body-container {
             width: 100%;
-            background-color: red;
             border-bottom-color: black;
             vertical-align: middle;
             margin: 0 auto;
+        }
+
+        #body-sub-container {
+            width: 100%;
+            height: 100%;
         }
 
         #schl-container {
@@ -19,25 +23,22 @@
             text-align: center;
         }
 
-        #schl-container > h1 > a {
-            color: yellow;
-            text-decoration: none;
-        }
+            #schl-container > h1 > a {
+                color: yellow;
+                text-decoration: none;
+            }
 
         #fav-container {
             color: black;
-            float: left;
-            align-content: center;
-            width: 700px;
-            margin-left: 100px;
+            width: 100%;
             overflow-y: scroll;
             height: 200px;
+            margin-bottom: 50px;
         }
 
         #recent-container {
-            float: right;
             align-content: center;
-            width: 500px;
+            width: 100%;
             margin-right: 100px;
             overflow-y: scroll;
             height: 200px;
@@ -53,123 +54,105 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
 
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>
-                <div id="fav-container">
-                    <asp:Repeater ID="favRepeater" runat="server" OnItemCommand="favPostsRepeater_ItemCommand">
+        <div id="body-sub-container">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 
-                        <HeaderTemplate>
-                            <table id="favPostsTB" class="table table-hover" style="width: 100%;">
+                <ContentTemplate>
+                    <h2>Favourite Posts</h2>
+                    <div id="fav-container">
+                        
+                        <%if (recNum == 0)
+                        {%>
+                        <p>No favourite posts yet</p>
+                        <%} %>
+                        <%if (favNum != 0)
+                        {%>
+                        <asp:Repeater ID="favRepeater" runat="server" OnItemCommand="favPostsRepeater_ItemCommand">
+
+                            <HeaderTemplate>
+                                <table id="favPostsTB" class="table table-hover" style="width: 100%;">
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Title of Post</th>
+                                        <th>Date of Post</th>
+                                        <th colspan="2">Added On</th>
+                                    </tr>
+                            </HeaderTemplate>
+
+                            <ItemTemplate>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Title of Post</th>
-                                    <th>Date of Post</th>
-                                    <th colspan="2">Added On</th>
+                                    <td>
+                                        <%# Eval("uid") %>
+                                    </td>
+                                    <td>
+                                        <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("post.id") %>'><%#truncateTitle(Eval("post.title").ToString(), 100)%></asp:LinkButton>
+                                    </td>
+                                    <td>
+                                        <%# Eval("post.date") %>
+                                    </td>
+                                    <td>
+                                        <%# Eval("date") %>
+                                    </td>
+                                    <td>
+                                        <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>' />
+
+                                    </td>
                                 </tr>
-                        </HeaderTemplate>
+                            </ItemTemplate>
 
-                        <ItemTemplate>
+                            <FooterTemplate>
+                                </table>
+                            </FooterTemplate>
+                        </asp:Repeater>
+                        <%} %>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+
+            <hr />
+
+            <h2>Recent Posts</h2>
+            <div id="recent-container">
+                
+                <%if (recNum == 0)
+                    {%>
+                <p>No recent posts yet</p>
+                <%} %>
+                <%if (recNum != 0)
+                    {%>
+                <asp:Repeater ID="recentPostsRepeater" runat="server" OnItemCommand="recentPostsRepeater_ItemCommand">
+
+                    <HeaderTemplate>
+                        <table id="recentPostsTB" class="table table-hover">
                             <tr>
-                                <td>
-                                    <%# Eval("uid") %>
-                                </td>
-                                <td>
-                                    <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("post.id") %>'><%#truncateTitle(Eval("post.title").ToString())%></asp:LinkButton>
-                                </td>
-                                <td>
-                                    <%# Eval("post.date") %>
-                                </td>
-                                <td>
-                                    <%# Eval("date") %>
-                                </td>
-                                <td>
-                                    <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>' />
-
-                                </td>
+                                <th>User</th>
+                                <th>Title of Post</th>
+                                <th>Date of Post</th>
                             </tr>
-                        </ItemTemplate>
-                        <%--<Columns>
+                    </HeaderTemplate>
 
-                            <asp:BoundField DataField="uid"
-                                ReadOnly="true"
-                                HeaderText="User"
-                                ItemStyle-Wrap="False" />
-                            <asp:BoundField
-                                ReadOnly="true"
-                                HeaderText="Title of Post"
-                                ItemStyle-Wrap="False" />
-                            <asp:BoundField DataField="post.date"
-                                ConvertEmptyStringToNull="true"
-                                HeaderText="Date of Post"
-                                ItemStyle-Wrap="False" />
-                            <asp:BoundField DataField="date"
-                                ConvertEmptyStringToNull="true"
-                                HeaderText="Added On"
-                                ItemStyle-Wrap="False" />
-
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Button ID="deleteBtn" Text="Delete" UseSubmitBehavior="true" runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("id") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-                        </Columns>--%>
-                        <FooterTemplate>
-                            </table>
-                        </FooterTemplate>
-                    </asp:Repeater>
-                </div>
-            </ContentTemplate>
-        </asp:UpdatePanel>
-
-        <%--
-        <div id="recent-container">
-
-            <p>post 1</p>
-            <p>post 2</p>
-            <p>post 3</p>
-            <p>post 4</p>
-            <p>post 5</p>
-            <p>post 6</p>
-
-            
-
-        </div>--%>
-
-        <div id="recent-container">
-
-            <asp:Repeater ID="recentPostsRepeater" runat="server" OnItemCommand="recentPostsRepeater_ItemCommand">
-
-                <HeaderTemplate>
-                    <table id="recentPostsTB" class="table table-hover">
+                    <ItemTemplate>
                         <tr>
-                            <th>User</th>
-                            <th>Title of Post</th>
-                            <th>Date of Post</th>
+                            <td>
+                                <%# Eval("uid") %>
+                            </td>
+                            <td>
+                                <%--<a href="~/ViewPost.aspx?pid<%# Eval("id") %>"><%# Eval("title") %></a>--%>
+                                <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("id") %>'><%# truncateTitle(Eval("title").ToString(), 100) %></asp:LinkButton>
+                            </td>
+                            <td>
+                                <%# Eval("date") %>
+                            </td>
                         </tr>
-                </HeaderTemplate>
+                    </ItemTemplate>
 
-                <ItemTemplate>
-                    <tr>
-                        <td>
-                            <%# Eval("uid") %>
-                        </td>
-                        <td>
-                            <%--<a href="~/ViewPost.aspx?pid<%# Eval("id") %>"><%# Eval("title") %></a>--%>
-                            <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("id") %>'><%# truncateTitle(Eval("title").ToString()) %></asp:LinkButton>
-                        </td>
-                        <td>
-                            <%# Eval("date") %>
-                        </td>
-                    </tr>
-                </ItemTemplate>
-
-                <FooterTemplate>
-                    </table>
-                </FooterTemplate>
-            </asp:Repeater>
+                    <FooterTemplate>
+                        </table>
+                    </FooterTemplate>
+                </asp:Repeater>
+                <%} %>
+            </div>
         </div>
-
     </div>
 </asp:Content>
 

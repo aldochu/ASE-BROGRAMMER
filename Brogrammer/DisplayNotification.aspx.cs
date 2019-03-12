@@ -12,18 +12,29 @@ namespace Brogrammer
 {
     public partial class DisplayNotification : System.Web.UI.Page
     {
-        string uid = "user1";
+        string uid = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack)
+            if (Session["Account"] != null)
+                uid = ((account)Session["Account"]).id;
+
+            else
+                Response.Redirect("LoginPage.aspx");
+
+            if (!Page.IsPostBack)
+            {
                 display_Notifications(uid);
+            }
         }
 
         protected void display_Notifications(string uid)
         {
             List<notification> notifications = new List<notification>();
             notifications = PostSystem.GetNotifications(uid);
+
+            if (notifications.Count <= 0)
+                Response.Redirect("ListOfPost.aspx");
 
             notification_repeater.DataSource = notifications;
             notification_repeater.DataBind();
@@ -34,15 +45,19 @@ namespace Brogrammer
         {
             RepeaterItem item = e.Item;
 
+            string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+            string commentid = commandArgs[0];
+            string selectedPostID = commandArgs[1];
+
             switch (e.CommandName.ToString())
             {
                 case "VIEW_POST":
-                    string selectedPostID = e.CommandArgument.ToString();
 
-                    PostSystem.ClearNotification(selectedPostID, uid);
+                    if (PostSystem.ClearNotification(commentid, uid) != 0)
+                        Response.Write("<p>notification cleared!</p>");
 
-                    // to direct user to the exact comment record on the page of the post
-                    //display_Notifications(uid);
+                    // to direct uid to the exact comment record on the page of the post
+                    display_Notifications(uid);
 
                     Session["POST"] = selectedPostID;
                     Response.Redirect("DisplayPost.aspx");

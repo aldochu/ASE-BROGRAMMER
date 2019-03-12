@@ -21,10 +21,10 @@ namespace Brogrammer
         {
 
             //for testing purposes
-            a.id = "prof";
-            a.name = "stud3123";
-            Session["Account"] = a; //saving to session
-            Session["ROLE"] = "student";
+            //a.id = "prof";
+            //a.name = "stud3123";
+            //Session["Account"] = a; //saving to session
+            //Session["ROLE"] = "student";
             //Session["POST"] = "user1230220191627";
             /////////////////
 
@@ -221,7 +221,7 @@ namespace Brogrammer
             System.Web.UI.WebControls.Label lblID = grdAllCom.Rows[i].FindControl("lblID") as System.Web.UI.WebControls.Label; //get id of the specific row
             System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
             c.commentid = lblID.Text; //this is comment ID
-            c.endorseby = a.name; //since this function can only be call by prof, so the current user is prof
+            c.endorseby = a.name; //since this function can only be call by prof, so the current uid is prof
 
 
             PostSystem.Endorse(c);

@@ -409,7 +409,7 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("@commentid", commentid);
 
 
-            //this is to create record into table so user can't vote again
+            //this is to create record into table so uid can't vote again
             query = "INSERT into votingrec (postid,commentid,uid) VALUES (@postid,@commentid,@userid)";
             var cmd2 = new MySqlCommand(query, conn);
             cmd2.Parameters.AddWithValue("@postid", postid);
@@ -439,7 +439,7 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("@commentid", commentid);
 
 
-            //this is to create record into table so user can't vote again
+            //this is to create record into table so uid can't vote again
             query = "INSERT into votingrec (postid,commentid,uid) VALUES (@postid,@commentid,@userid)";
             var cmd2 = new MySqlCommand(query, conn);
             cmd2.Parameters.AddWithValue("@postid", postid);
@@ -560,7 +560,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT id, commentid, title, userid, brogrammer.comment.content, brogrammer.comment.flaggednotified FROM brogrammer.post, brogrammer.comment " +
+            string query = "SELECT id, commentid, title, userid, postid, brogrammer.comment.content, brogrammer.comment.flaggednotified FROM brogrammer.post, brogrammer.comment " +
                 "WHERE brogrammer.comment.postid = brogrammer.post.id AND brogrammer.comment.userid = @uid AND brogrammer.comment.flaggednotified = @notified " +
                 "GROUP BY brogrammer.comment.commentid";
 
@@ -591,11 +591,12 @@ namespace Brogrammer.Controller
             return list;
         }
 
-        public static void ClearNotification (string commentid, string userid)
+        public static int ClearNotification (string commentid, string userid)
         {
 
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
+            int result = 0;
 
             string query = "UPDATE comment SET flaggednotified = @clearflag where commentid = @commentid AND userid = @uid";
 
@@ -606,9 +607,11 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("uid", userid);
 
             conn.Open();
-            cmd.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
      
             conn.Close();
+
+            return result;
 
             /////////////////////////////////////////////////////////END SECTION FOR NOTIFICATIONS FUNCTION////////////////////////////////////////////
         }

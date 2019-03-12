@@ -15,8 +15,6 @@ namespace Brogrammer
             account a = new account();
             a = (account)Session["Account"]; //this is to get cookie
 
-
-
             if (a != null)
             {
                 switch (a.role) //this is to limit access, so that different role will go different page

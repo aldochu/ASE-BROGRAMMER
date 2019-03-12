@@ -54,7 +54,7 @@ namespace Brogrammer
             {
                 post p = new post();
                 p.id = "user1" + DateTime.Now.ToString("ddMMyyyyHHmm"); //user1 is just a placeholder, will use session to get the id
-                p.uid = "user1"; //user id
+                p.uid = "user1"; //uid id
                 p.title = txtContent.Text;
                 p.content = txtContent.Text;
                 p.date = DateTime.Now;

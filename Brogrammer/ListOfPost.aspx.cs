@@ -38,7 +38,7 @@ namespace Brogrammer
                 case "VIEW_POST":
                     string selectedPostID = e.CommandArgument.ToString();
 
-                    // to direct user to the exact comment record on the page of the post
+                    // to direct uid to the exact comment record on the page of the post
                     Session["POST"] = selectedPostID;
                     Response.Redirect("DisplayPost.aspx");
 

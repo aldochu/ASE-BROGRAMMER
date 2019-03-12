@@ -11,23 +11,30 @@ namespace Brogrammer
 {
     public partial class HomePage : System.Web.UI.Page
     {
-
-        String user = "user1";
+        public int favNum = 0;
+        public int recNum = 0;
+        string uid = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Account"] != null)
+                uid = ((account)Session["Account"]).id;
+            else
+                Response.Redirect("LoginPage.aspx");
+            
             if (!IsPostBack)
             {
                 //Your code for Bind data 
-                displayFavPosts(user);
-                displayRecentPosts(user);
+                displayFavPosts(uid);
+                displayRecentPosts(uid);
             }
             
         }
 
         protected void displayFavPosts(String userId)
         {
-            List<fpost> favPosts = PostSystem.GetFavPosts(user);
+            List<fpost> favPosts = PostSystem.GetFavPosts(uid);
+            favNum = favPosts.Count;
 
             favRepeater.DataSource = favPosts;
             favRepeater.DataBind();
@@ -36,15 +43,16 @@ namespace Brogrammer
 
         protected void displayRecentPosts(String userId)
         {
-            List<post> recentPosts = PostSystem.GetPostTest(user);
+            List<post> recentPosts = PostSystem.GetPostTest(uid);
+            recNum = recentPosts.Count;
 
             recentPostsRepeater.DataSource = recentPosts;
             recentPostsRepeater.DataBind();
         }
 
-        protected string truncateTitle(String postTitle)
+        protected string truncateTitle(String text, int limit)
         {
-            return postTitle.Length >= 21? postTitle.Substring(0, 20) + "..." : postTitle;
+            return text.Length >= limit? text.Substring(0, limit-1) + "..." : text;
         }
 
         protected void favPostsRepeater_ItemCommand(object sender, RepeaterCommandEventArgs e)
@@ -54,34 +62,23 @@ namespace Brogrammer
                 case "DELETE_ROW":
                     int selectedPost = Convert.ToInt32(e.CommandArgument);
 
-                    bool result = PostSystem.RemoveFavPost(user, selectedPost);
+                    bool result = PostSystem.RemoveFavPost(uid, selectedPost);
 
                     if (result)
                     {
-                        displayFavPosts(user);
+                        displayFavPosts(uid);
                     }
                     break;
 
                 case "VIEW_POST":
                     string selectedPostID = e.CommandArgument.ToString();
 
-                    // to direct user to the exact comment record on the page of the post
+                    // to direct uid to the exact comment record on the page of the post
                     Session["POST"] = selectedPostID;
                     Response.Redirect("DisplayPost.aspx");
                     break;
 
             }
-            //if (e.CommandName == "DELETE_ROW")
-            //{
-            //    int selectedRow = Convert.ToInt32(e.CommandArgument);
-            //    bool result = PostSystem.RemoveFavPost(user, selectedRow);
-
-            //    if (result)
-            //    {
-            //        displayFavPosts(user);
-            //        //Response.Redirect("HomePage.aspx");
-            //    }
-            //}
             
         }
 
@@ -94,7 +91,7 @@ namespace Brogrammer
                 case "VIEW_POST":
                     string selectedPostID = e.CommandArgument.ToString();
 
-                    // to direct user to the exact comment record on the page of the post
+                    // to direct uid to the exact comment record on the page of the post
                     Session["POST"] = selectedPostID;
                     Response.Redirect("DisplayPost.aspx");
 
