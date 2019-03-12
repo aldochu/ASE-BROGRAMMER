@@ -10,6 +10,12 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
 		<h1>IHIHIHIHI</h1>
     </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            width: 600px;
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,7 +24,8 @@
         <nav class="navbar navbar-light" style="box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); background-color:floralwhite">
              <div class="nav">
                  
-                  <span class="font_style_one black pt-2 pl-3">SAVE MY GPA FORUM</span>
+                  <img alt="" class="auto-style1" src="lyGPA.png" /><br />
+                  <span class="font_style_one black pt-2 pl-3">lyGPA FORUM</span>
 
 
 				 <%if(Session["Account"] == null){%>
@@ -54,14 +61,25 @@
             </div>
         </nav>
 
-
-
-    
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        <div class="content">
+                <div class="bs-docs-section">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="bs-component">
+                                <div class="jumbotron">
+                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 				<p>inherting from master page</p>
             </asp:ContentPlaceHolder>
-        </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        <div class="footer">
+                <h5>Copyright @ lyGPA</h5>
+            </div>
     </form>
 </body>
 </html>

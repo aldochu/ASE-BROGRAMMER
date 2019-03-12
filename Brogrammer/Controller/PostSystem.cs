@@ -162,7 +162,43 @@ namespace Brogrammer.Controller
             return list;
         }
 
-       
+        public static List<post> getPostByModuleCode(string filter)
+        {
+
+            List<post> list = new List<post>();
+
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
+            var conn = new MySqlConnection(dbConnectionString);
+
+            string query = "SELECT * FROM post where title like @code order by date desc ";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@code", "%" + filter + "%");
+
+            conn.Open();
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                post p = new post();
+
+                p.id = reader["id"].ToString();
+                p.uid = reader["uid"].ToString();
+                p.title = reader["title"].ToString();
+                p.content = reader["content"].ToString();
+                p.date = Convert.ToDateTime(reader["date"]);
+                p.file = reader["file"].ToString();
+
+                list.Add(p);
+
+            }
+            conn.Close();
+
+            return list;
+        }
+
+
+
 
         /////////////////////////////////////////////////////////START SECTION FOR FAVOURITE FUNCTION////////////////////////////////////////////
         public static List<fpost> GetFavPosts(string uid)

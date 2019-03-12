@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2027
+VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brogrammer", "Brogrammer\Brogrammer.csproj", "{362BF6FF-ADEC-4E5E-8F49-5CB4AF9A3124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrogrammerAB", "..\..\..\source\repos\BrogrammerAB\BrogrammerAB\BrogrammerAB.csproj", "{8A1D5BC4-636C-4F3C-B837-381B83C2FE58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +17,15 @@ Global
 		{362BF6FF-ADEC-4E5E-8F49-5CB4AF9A3124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362BF6FF-ADEC-4E5E-8F49-5CB4AF9A3124}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{362BF6FF-ADEC-4E5E-8F49-5CB4AF9A3124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A1D5BC4-636C-4F3C-B837-381B83C2FE58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1D5BC4-636C-4F3C-B837-381B83C2FE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1D5BC4-636C-4F3C-B837-381B83C2FE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1D5BC4-636C-4F3C-B837-381B83C2FE58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5681ACF1-EB23-4E1E-ABF7-D6CD5D4DDE6C}
+		SolutionGuid = {55AE58EE-9594-42F1-AA6E-8C565D5614F4}
 	EndGlobalSection
 EndGlobal
