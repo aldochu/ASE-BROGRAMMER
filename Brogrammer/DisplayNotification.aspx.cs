@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using Brogrammer.Entity;
 using Brogrammer.Controller;
 using System.Web.UI.HtmlControls;
+using System.Web.Services;
+using System.Web.Http;
 
 namespace Brogrammer
 {
@@ -41,6 +43,11 @@ namespace Brogrammer
 
         }
 
+        protected string truncateComment(String text, int limit)
+        {
+            return text.Length >= limit ? text.Substring(0, limit - 1) + "..." : text;
+        }
+
         protected void notification_repeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             RepeaterItem item = e.Item;
@@ -60,6 +67,7 @@ namespace Brogrammer
                     display_Notifications(uid);
 
                     Session["POST"] = selectedPostID;
+                    Session["CommentID"] = commentid;
                     Response.Redirect("DisplayPost.aspx");
 
                     //Response.Write("User selected: " + selectedCommentID);

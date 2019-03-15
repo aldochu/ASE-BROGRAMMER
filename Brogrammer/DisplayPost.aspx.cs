@@ -33,7 +33,6 @@ namespace Brogrammer
 
             a = (account)Session["Account"]; //to get the session
 
-
             Get_and_Bind_Post(); //this method is to get the post  
             
 
@@ -41,6 +40,7 @@ namespace Brogrammer
             if (!Page.IsPostBack)
             {
                 bindAccounts();
+                
             }
         }
 
@@ -72,7 +72,6 @@ namespace Brogrammer
 
             grdAllCom2.DataSource = PostSystem.getAllCom();
             grdAllCom2.DataBind();
-
         }
 
         protected void grdAllCom_PageIndexChanging(object sender, GridViewPageEventArgs e)
