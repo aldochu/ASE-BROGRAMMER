@@ -20,7 +20,7 @@ namespace Brogrammer
         {
             //this is to get cookie
             a = (account)Session["Account"]; 
-            p = (post)Session["Post"];
+            p = (post)Session["PostDetail"];
 
             loadData();
 
