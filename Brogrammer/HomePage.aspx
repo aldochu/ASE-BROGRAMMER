@@ -53,18 +53,23 @@
         }
 
         #favHeader {
-            background-color: #3b5998;
+            background-color: black;
             position: relative;
+            color: white;
+            opacity: 0.7;
         }
 
         #recHeader {
-            background-color: red;
+            background-color: black;
             position: relative;
+            color: white;
+            opacity: 0.7;
         }
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/Scripts/jquery.floatThead.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <%-- Script to prevent table header from being scrolled--%>
     <script>
         $(document).ready(function () {
@@ -118,7 +123,7 @@
                                             <th>User</th>
                                             <th>Title of Post</th>
                                             <th>Date of Post</th>
-                                            <th colspan="2">Added On</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                             </HeaderTemplate>
@@ -132,13 +137,11 @@
                                         <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("post.id") %>'><%#truncateTitle(Eval("post.title").ToString(), 100)%></asp:LinkButton>
                                     </td>
                                     <td>
-                                        <%# Eval("post.date") %>
-                                    </td>
-                                    <td>
                                         <%# Eval("date") %>
                                     </td>
                                     <td>
-                                        <asp:LinkButton ID="deleteBtn" Text="Remove" UseSubmitBehavior="true" runat="server" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>' />
+                                        <asp:LinkButton ID="deleteBtn" Text="Remove" UseSubmitBehavior="true" runat="server" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>'>
+                                           <span class="fa fa-trash" style="font-size:20px;"> Remove</span></asp:LinkButton>
 
                                     </td>
                                 </tr>

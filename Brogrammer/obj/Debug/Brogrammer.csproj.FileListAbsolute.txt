@@ -716,3 +716,4 @@ C:\Users\han_x\Desktop\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csproj.Cor
 C:\Users\han_x\Desktop\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csproj.CopyComplete
 C:\Users\han_x\Desktop\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.dll
 C:\Users\han_x\Desktop\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.pdb
+C:\Users\yongg\Source\Repos\ASE-BROGRAMMER\Brogrammer\obj\Debug\Brogrammer.csprojAssemblyReference.cache
