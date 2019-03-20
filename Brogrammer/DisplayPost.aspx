@@ -119,6 +119,10 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="HomePage.aspx">Home</a></li>
+        <li class="breadcrumb-item active"><asp:Label ID="breadcrumbTitle" runat="server"></asp:Label></li>
+    </ol>
     <div class="Post">
 		<table class="tableStyle" >
 			<tr class="center">

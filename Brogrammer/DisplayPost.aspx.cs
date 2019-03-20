@@ -63,6 +63,7 @@ namespace Brogrammer
             lblContents.Text = p.content;
             lblContents.Rows = (lblContents.Text.Split('\n').Length) + 2;
             lblDate.Text = p.date.ToString();
+            breadcrumbTitle.Text = p.title;
         }
 
         private void bindAccounts()

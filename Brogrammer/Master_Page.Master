@@ -8,7 +8,7 @@
 	<link href="Content/bootstrap.css" rel="stylesheet" />
     <link href="Content/style.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
-		<h1>IHIHIHIHI</h1>
+
     </asp:ContentPlaceHolder>
     <style type="text/css">
         .auto-style1 {
@@ -20,19 +20,23 @@
 <body>
 
 	<form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <nav class="navbar navbar-light" style="box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); background-color:floralwhite">
-             <div class="nav">
-                 
-                  <img alt="" class="auto-style1" src="lyGPA.png" /><br />
-                  <span class="font_style_one black pt-2 pl-3">lyGPA FORUM</span>
-
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="navbar-brand" href="HomePage.aspx">
+                            <img src="logo.png" /><span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
 
 				 <%if(Session["Account"] == null){%>
 
 				<% }else{%>
-				 <br />
-				 HELLO
+				 Hello,&nbsp;&nbsp;  
                     <%if((String)Session["ROLE"] == "admin"){%>
                     <asp:Label ID="lblUsername_admin" runat="server" CssClass="mr-1 btn"></asp:Label>
                     <%}else{ %>
@@ -47,18 +51,11 @@
                    <asp:Label ID="Label3" runat="server"></asp:Label>
               <%}%>
                     <%}%>
-				    <a class="btn btn-outline-secondary" href="SignOut.aspx">Sign Out</a>
+				    <a class="btn btn-secondary my-2 my-sm-0" href="SignOut.aspx">Sign Out</a>
                    
 				<%}%>
                   
               </div>
-
-
-             <div class="justify-content-end">
-
-
-                
-            </div>
         </nav>
 
         <div class="content">
@@ -68,7 +65,7 @@
                             <div class="bs-component">
                                 <div class="jumbotron">
                                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-				<p>inherting from master page</p>
+				
             </asp:ContentPlaceHolder>
                                 </div>
                                 </div>
@@ -76,9 +73,9 @@
                         </div>
                 </div>
             </div>
-
+                          
         <div class="footer">
-                <h5>Copyright @ lyGPA</h5>
+                <h5 style="text-align:center">Copyright @ lyGPA</h5>
             </div>
     </form>
 </body>
