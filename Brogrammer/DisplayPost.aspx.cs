@@ -61,8 +61,9 @@ namespace Brogrammer
             lblUid.Text = p.uid;
             lblTitle.Text = p.title;
             lblContents.Text = p.content;
-            lblContents.Rows = (lblContents.Text.Split('\n').Length);
+            lblContents.Rows = (lblContents.Text.Split('\n').Length) + 2;
             lblDate.Text = p.date.ToString();
+            breadcrumbTitle.Text = p.title;
         }
 
         private void bindAccounts()
@@ -86,7 +87,7 @@ namespace Brogrammer
             //since the postID is still in the session, we don't have to do anything
 
             //for testing purposes
-            Session["Post"] = p; //saving to session
+            Session["PostDetail"] = p; //saving to session
 
 
             Response.Redirect("EditPostPage.aspx"); //redirect

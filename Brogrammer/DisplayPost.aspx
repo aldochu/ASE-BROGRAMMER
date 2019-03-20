@@ -35,6 +35,9 @@
 			 margin-left: auto;
             margin-right: auto;
 		}
+		.auto-style2 {
+			 font-size: small;
+		}
     	.center {
     		margin: auto;
 			width: 100%;
@@ -42,6 +45,22 @@
 			margin-left: auto;
 			margin-right: auto;
     	}
+
+		.right {
+    		margin: auto;
+			width: 100%;
+			text-align: right;
+			margin-left: auto;
+			margin-right: auto;
+			padding-right: 1em;
+    	}
+
+		tr.noBorder td {
+			border: 0;
+			border-top:hidden;
+
+		}
+
 
 		.Edit
 
@@ -70,6 +89,7 @@ background-color:cadetblue;
 function setHeight(txtdesc) {
 txtdesc.style.height = txtdesc.scrollHeight + "px";
 }
+
 </script>
 
 	<script runat="server">
@@ -90,6 +110,8 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 			if(Convert.ToString(Eval("Endorseby")).Length>3)
 				box.BackColor = System.Drawing.Color.Cornsilk;
+
+			box.Rows = Convert.ToString(Eval("Endorseby")).Split('\n').Length + 1;
   
 		}
 
@@ -97,21 +119,20 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="HomePage.aspx">Home</a></li>
+        <li class="breadcrumb-item active"><asp:Label ID="breadcrumbTitle" runat="server"></asp:Label></li>
+    </ol>
     <div class="Post">
 		<table class="tableStyle" >
-			<tr>
-					<td class="auto-style2 font_style_two">Posted by:			
-				    <asp:Label ID="lblUid" runat="server" CssClass="font_style_two"></asp:Label>				
-				</td>							
-			</tr>
-			<tr>
-				<td class="auto-style2 font_style_two">Title:			
+			<tr class="center">
+				<td class="font_style_two">Title: &nbsp			
 				    <asp:Label ID="lblTitle" runat="server" CssClass="font_style_two"></asp:Label>				
 				</td>								
 			</tr>
 			<tr>
-					<td class="auto-style2 font_style_two">			
-					<asp:TextBox ID="lblContents" TextMode="multiline" runat="server" Width="700px" Text='<%# Eval("Content") %>'  Height='<%# (Eval("Content").ToString().Length/4)+30%>' ReadOnly="true"></asp:TextBox>
+					<td class="center">			
+					<asp:TextBox ID="lblContents" TextMode="multiline" runat="server" Width="700px" Text='<%# Eval("Content") %>'  Height='<%# (Eval("Content").ToString().Length/2)%>' ReadOnly="true" Font-Size="9"></asp:TextBox>
 						
 					<br />
 						<%if (p.file != ""){%>
@@ -119,20 +140,29 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 						<%}%>
 				</td>			
 			</tr>
+			<tr class="right">
+					<td class="right auto-style2 font_style_two">Posted by:&nbsp			
+				    <asp:Label ID="lblUid" runat="server" CssClass="font_style_two" Font-Size="10"></asp:Label>				
+				</td>							
+			</tr>
+			<tr class="noBorder">
+				<td class="right auto-style2 font_style_two">	
+					Date of Post:&nbsp<asp:Label ID="lblDate" runat="server" Font-Size="10"></asp:Label>
+				</td>
+			</tr>
 			<tr>
-				<td class="auto-style2">	
-					Date of Post:<asp:Label ID="lblDate" runat="server"></asp:Label>	
+				<td  class="right">
 					<%if (p.uid == a.id){%>
-					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnUpdatepost_click" CssClass="btn btn-dark" />
+					<asp:Button ID="btnUpdatepost" runat="server" Text="Edit" OnClick="btnUpdatepost_click" CssClass="btn btn-dark" Font-Size="10"/>
 					<%}%>
 					<%if (role == "admin"){%>
-					<asp:Button ID="Button1" runat="server" Text="Delete" OnClick="btnDeletepost_click" CssClass="btn btn-danger" />
+					<asp:Button ID="Button1" runat="server" Text="Delete" OnClick="btnDeletepost_click" CssClass="btn btn-danger" Font-Size="10" />
 					<%}%>
 					<%if (p.uid != a.id && role == "student"){%>
-					<asp:Button ID="Button3" runat="server" Text="Fav" OnClick="btnFavpost_click" CssClass="btn btn-dark" />
+					<asp:Button ID="Button3" runat="server" Text="Fav" OnClick="btnFavpost_click" CssClass="btn btn-dark"  Font-Size="10"/>
 					<%}%>
-
-				</td>	
+				</td>
+				
 			</tr>
 		</table>
 		</div>
@@ -150,53 +180,53 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                 <Columns>
                     <asp:TemplateField HeaderText="CID" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("CID") %>'></asp:Label>
+                            <asp:Label ID="lblID" runat="server" Font-Size="10" Text='<%# Eval("CID") %>'></asp:Label>
                         </ItemTemplate>	
                     </asp:TemplateField>
 					<asp:TemplateField HeaderText="UID" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblUID" runat="server" Text='<%# Eval("UID") %>'></asp:Label>
+                            <asp:Label ID="lblUID" runat="server" Font-Size="10" Text='<%# Eval("UID") %>'></asp:Label>
                         </ItemTemplate>	
                     </asp:TemplateField>
-					<asp:TemplateField  HeaderText="Name" HeaderStyle-Font-Size="6">
+					<asp:TemplateField  HeaderText="Name" HeaderStyle-Font-Size="6" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                            <asp:Label ID="lblName" runat="server" Font-Size="10" Text='<%# Eval("Name") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-							<asp:TextBox OnDataBinding="changecolor" ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/7)%>' ReadOnly="true"></asp:TextBox>
+							<asp:TextBox OnDataBinding="changecolor" Font-Size="10" ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
                         <ItemTemplate>
 							<asp:Button ID="btnEditComment" Font-Size="6" runat="server" Text="Edit Comment" OnClick="btnEditComment" visible='<%# (Convert.ToString(Eval("UID"))==a.id)%>' CssClass="btn btn-success" />
-                            <asp:Button ID="btnUpvote" runat="server" Text="Up" OnClick="btnUpVote" visible='<%# (Convert.ToString(Eval("UID"))!=a.id)%>' CssClass="btn btn-dark" />
+                            <asp:Button ID="btnUpvote" runat="server" Font-Size="10" Width="100%" Text="Up" OnClick="btnUpVote" visible='<%# (Convert.ToString(Eval("UID"))!=a.id)%>' CssClass="btn btn-dark" />
                         </ItemTemplate>
                     </asp:TemplateField>
-					<asp:TemplateField HeaderText="Upvote" HeaderStyle-Font-Size="6">
+					<asp:TemplateField HeaderText="Upvote" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblupvote" runat="server" Width="20px" Text='<%# Eval("Upvote") %>'></asp:Label>
+                            <asp:Label ID="lblupvote" runat="server" Font-Size="10" Width="20px" Text='<%# Eval("Upvote") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnDelete" runat="server" Text="Down" OnClick="btnDownVote" visible='<%# (Convert.ToString(Eval("UID"))!=a.id)%>' CssClass="btn btn-danger"/>
+                            <asp:Button ID="btnDelete" runat="server" Font-Size="10" Text="Down" OnClick="btnDownVote" visible='<%# (Convert.ToString(Eval("UID"))!=a.id)%>' CssClass="btn btn-danger"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-					<asp:TemplateField HeaderText="Downvote" HeaderStyle-Font-Size="6">
+					<asp:TemplateField HeaderText="Downvote" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblDownvote" runat="server"  Width="20px" Text='<%# Eval("Downvote") %>'></asp:Label>
+                            <asp:Label ID="lblDownvote" runat="server" Font-Size="10" Width="20px" Text='<%# Eval("Downvote") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField >
-					<asp:TemplateField  HeaderText="Date" HeaderStyle-Font-Size="6">
+					<asp:TemplateField  HeaderText="Date" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblDate" runat="server" Width="60px" Text='<%# Eval("Date") %>'></asp:Label>
+                            <asp:Label ID="lblDate" runat="server" Width="60px" Font-Size="8" Text='<%# Eval("Date") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-					<asp:TemplateField  HeaderText="Endorsed" HeaderStyle-Font-Size="6">
+					<asp:TemplateField  HeaderText="Endorsed" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblEndorse" runat="server" Width="60px" Text='<%# Eval("Endorseby") %>'></asp:Label>
+                            <asp:Label ID="lblEndorse" runat="server" Width="60px" Font-Size="10" Text='<%# Eval("Endorseby") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -219,22 +249,22 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
                 <Columns>
                     <asp:TemplateField HeaderText="CID" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("CID") %>'></asp:Label>
+                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("CID") %>' Font-Size="10"></asp:Label>
                         </ItemTemplate>	
                     </asp:TemplateField>
 					<asp:TemplateField HeaderText="UID" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblUID" runat="server" Text='<%# Eval("UID") %>'></asp:Label>
+                            <asp:Label ID="lblUID" runat="server" Text='<%# Eval("UID") %>' Font-Size="10"></asp:Label>
                         </ItemTemplate>	
                     </asp:TemplateField>
-					<asp:TemplateField  HeaderText="Name" HeaderStyle-Font-Size="6">
+					<asp:TemplateField HeaderText="Name" HeaderStyle-Font-Size="6" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>' Font-Size="10"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderStyle-Font-Size="6" HeaderText="Comment" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-							<asp:TextBox ID="txtContent" TextMode="multiline" runat="server" Width="400px" Text='<%# Eval("Content") %>'  Rows='<%# (Eval("Content").ToString().Length/2)%>' ReadOnly="true"></asp:TextBox>
+							<asp:TextBox OnDataBinding="changecolor" ID="txtContent" TextMode="multiline" Font-Size="10" runat="server" Width="400px" Text='<%# Eval("Content") %>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
 					<asp:TemplateField>
@@ -243,14 +273,14 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 							<asp:Button ID="btnDeleteComment" Font-Size="6" runat="server" Text="Delete Comment" OnClick="btnDeleteComment" visible='<%# (role == "admin")%>' CssClass="btn btn-danger" />
                         </ItemTemplate>
                     </asp:TemplateField>
-					<asp:TemplateField  HeaderText="Date" HeaderStyle-Font-Size="6">
+					<asp:TemplateField  HeaderText="Date" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
                         <ItemTemplate>
-                            <asp:Label ID="lblDate" runat="server" Width="60px" Text='<%# Eval("Date") %>'></asp:Label>
+                            <asp:Label ID="lblDate" runat="server" Width="60px" Font-Size="10" Text='<%# Eval("Date") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-					</td>
+					 </td>
 				</tr>
 			</table>
 			</div>
@@ -275,9 +305,9 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 				</td>
 			</tr>	
 			<tr>
-				<td style="padding-left:33%">Comment as:&nbsp;&nbsp;&nbsp;
-					<asp:RadioButton id="id" runat="server" Text="ID" GroupName="measurementSystem" Checked="true"></asp:RadioButton>&nbsp; &nbsp;
-					<asp:RadioButton id="anon" runat="server" Text="Anon" GroupName="measurementSystem"></asp:RadioButton>
+				<td style="padding-left:33%;font-size:13px">Comment as:&nbsp;&nbsp;&nbsp;
+					<asp:RadioButton id="id" runat="server" Font-Size="10" Text="ID" GroupName="measurementSystem" Checked="true"></asp:RadioButton>&nbsp; &nbsp;
+					<asp:RadioButton id="anon" runat="server" Font-Size="10" Text="Anon" GroupName="measurementSystem"></asp:RadioButton>
 				</td>
 			</tr>
 			<tr>

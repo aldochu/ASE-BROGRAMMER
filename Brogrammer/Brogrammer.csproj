@@ -164,8 +164,10 @@
     <Content Include="ListOfName.aspx" />
     <Content Include="ListOfPost.aspx" />
     <Content Include="LoginPage.aspx" />
+    <Content Include="logo.png" />
     <Content Include="lyGPA.png" />
     <Content Include="Master_Page.Master" />
+    <Content Include="Master_Login.Master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="PostPage.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -290,6 +292,13 @@
     </Compile>
     <Compile Include="LoginPage.aspx.designer.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master_Login.Master.cs">
+      <DependentUpon>Master_Login.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master_Login.Master.designer.cs">
+      <DependentUpon>Master_Login.Master</DependentUpon>
     </Compile>
     <Compile Include="Master_Page.Master.cs">
       <DependentUpon>Master_Page.Master</DependentUpon>

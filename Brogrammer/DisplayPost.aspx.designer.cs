@@ -13,13 +13,13 @@ namespace Brogrammer {
     public partial class DisplayPost {
         
         /// <summary>
-        /// lblUid control.
+        /// breadcrumbTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUid;
+        protected global::System.Web.UI.WebControls.Label breadcrumbTitle;
         
         /// <summary>
         /// lblTitle control.
@@ -47,6 +47,15 @@ namespace Brogrammer {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlIframe myframe;
+        
+        /// <summary>
+        /// lblUid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblUid;
         
         /// <summary>
         /// lblDate control.
