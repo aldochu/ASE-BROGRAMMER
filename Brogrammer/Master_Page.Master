@@ -35,8 +35,7 @@
 
 				 <%if(Session["Account"] == null){%>
 
-				<% }else{%>
-				 Hello,&nbsp;&nbsp;  
+				<% }else{%> 
                     <%if((String)Session["ROLE"] == "admin"){%>
                     <asp:Label ID="lblUsername_admin" runat="server" CssClass="mr-1 btn"></asp:Label>
                     <%}else{ %>
