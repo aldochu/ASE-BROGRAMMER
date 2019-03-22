@@ -40,8 +40,7 @@
             max-height: 300px;
             width: 100%;
             overflow-y: scroll;
-            font-family: Arial;
-            border-bottom: 2px solid blue;
+            border-bottom: 1px solid #D3D3D3;
         }
 
         #recent-container {
@@ -140,8 +139,8 @@
                                         <%# Eval("date") %>
                                     </td>
                                     <td>
-                                        <asp:LinkButton ID="deleteBtn" Text="Remove" UseSubmitBehavior="true" runat="server" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>'>
-                                           <span class="fa fa-trash" style="font-size:20px;"> Remove</span></asp:LinkButton>
+                                        <asp:LinkButton ID="deleteBtn" Text="Remove" UseSubmitBehavior="true" runat="server" CssClass="btn btn-info btn-sm" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>'>
+                                           <span class="glyphicon glyphicon-trash"></span> Trash </asp:LinkButton>
 
                                     </td>
                                 </tr>
