@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master_Page.Master" AutoEventWireup="true" CodeBehind="HomePage.aspx.cs" Inherits="Brogrammer.HomePage" %>
+﻿<%@ Page Title="HomePage" Language="C#" MasterPageFile="~/Master_Page.Master" AutoEventWireup="true" CodeBehind="HomePage.aspx.cs" Inherits="Brogrammer.HomePage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -11,10 +11,10 @@
             margin: 0 auto;
         }
 
-        #body-sub-container {
+        /*#body-sub-container {
             width: 100%;
             height: 100%;
-        }
+        }*/
 
         #schl-container {
             align-content: center;
@@ -24,14 +24,14 @@
         }
 
         #schl-container > h1 > a {
-            color: yellow;
+            color: #3498db;
             text-decoration: none;
         }
 
         #fav-container {
             color: black;
             width: 100%;
-            overflow-y: scroll;
+            overflow-y: scroll; 
             height: 50px;
             margin-bottom: 50px;
         }
@@ -40,6 +40,7 @@
             max-height: 300px;
             width: 100%;
             overflow-y: scroll;
+            overflow-x: hidden;
             border-bottom: 1px solid #D3D3D3;
         }
 
@@ -93,7 +94,7 @@
     <div id="body-container">
 
         <div id="schl-container">
-			<asp:LinkButton id="LinkButton1" Text="FORUM"  OnClick="LinkButton_Click" runat="server"/>
+			<%--<asp:LinkButton id="LinkButton1" Text="FORUM"  OnClick="LinkButton_Click" runat="server"/>--%>
             <h1><a href="www.google.com.sg" target="_self">SCSE</a></h1>
         </div>
 
@@ -104,7 +105,7 @@
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 
                 <ContentTemplate>
-                    <h2>Favourite Posts</h2>
+                    <h2 style="font-weight: bold;">Favourite Posts</h2>
 
                     <%if (recNum == 0)
                         {%>
@@ -139,9 +140,9 @@
                                     <td>
                                         <%# Eval("date") %>
                                     </td>
-                                    <td>
+                                    <td style="text-align: center;">
                                         <asp:LinkButton ID="deleteBtn" Text="Remove" UseSubmitBehavior="true" runat="server" CssClass="btn btn-info btn-sm" CommandName="DELETE_ROW" CommandArgument='<%# Eval("id") %>'>
-                                           <span class="glyphicon glyphicon-trash"></span> Trash </asp:LinkButton>
+                                           <span class="glyphicon glyphicon-trash" style="color: white; font-size: 10px;"></span><span style="color: white;"> Trash</span></asp:LinkButton>
 
                                     </td>
                                 </tr>
@@ -158,7 +159,7 @@
 
             <hr />
 
-            <h2>Recent Posts</h2>
+            <h2 style="font-weight: bold;">Recent Posts</h2>
 
 
             <%if (recNum == 0)

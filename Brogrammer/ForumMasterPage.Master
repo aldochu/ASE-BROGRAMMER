@@ -1,0 +1,129 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ForumMasterPage.master.cs" Inherits="Brogrammer.ForumMasterPage" %>
+
+<link href="Content/aspnetforum.css" rel="Stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+<script src="jquery.jgrowl_minimized.js" type="text/javascript"></script>
+<link href="jquery.jgrowl.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="recent posts" href="recent.aspx?rss=1" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width">
+<%-- for mobile --%>
+
+<style>
+    .navbar-brand {
+        margin-top: 20px;
+    }
+
+    .notification {
+        text-decoration: none;
+        position: relative;
+        padding-top: 10px;
+    }
+
+        .notification > span:hover {
+            color: white;
+        }
+
+        .notification .badge {
+            position: absolute;
+            top: -5px;
+            right: -1px;
+            margin-top: 2px;
+            padding: 2px;
+            border-radius: 75%;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+        }
+</style>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<asp:contentplaceholder id="ContentPlaceHolderHEAD" runat="server">
+	</asp:contentplaceholder>
+
+<%--<div class="topheader" enableviewstate="false" runat="server" id="divHeader">
+    <div class="innercontainer">
+        <ul>
+            <li><a href="recenttopics.aspx">Recent Topics</a></li>
+            <li><a href="recent.aspx">Recent Posts</a></li>
+            <li><a href="search.aspx">Search</a></li>
+            <li><a href="faq.aspx">faq</a></li>
+            <li class="mobilehidden"><a href="recent.aspx?rss=1" runat="server" id="rssLink" enableviewstate="false">
+                <img alt="recent posts from all forums - RSS" src="images/rss.png" /></a></li>
+        </ul>
+    </div>
+</div>--%>
+
+<div class="header">
+    <div class="innercontainer">
+        <a class="navbar-brand" href="HomePage.aspx">
+            <img src="logo.png" /><span class="sr-only">(current)</span></a>
+        <div id="curuserTable" runat="server" class="logininfo" enableviewstate="false">
+            <div class="curUserInfo">
+                <span style="text-align: left">
+                    <%--<span class="mobilehidden"><a href="editprofile.aspx">Profile</a> |</span>--%>
+                    <a href="SignOut.aspx" id="logoutLink" runat="server" enableviewstate="false">Sign Out</a>
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- admin menu -->
+<div class="topheader" style="margin-bottom: 10px">
+    <div class="innercontainer">
+        <ul>
+            <li style="float: left; margin: 0;"><b><a href="/HomePage.aspx">
+                <%--<asp:label id="lblAdministrator" runat="server" enableviewstate="False" meta:resourcekey="lblAdministratorResource1">HomePage</asp:label>--%>
+                HomePage
+            </a></b></li>
+            <li style="float: left;"><a href="/ListOfPost.aspx">
+                <%--<asp:label id="lblSettings" runat="server" enableviewstate="False" meta:resourcekey="lblSettingsResource1">Discussions</asp:label>--%>
+                Discussions
+            </a></li>
+            <li style="float: left;"><a href="/DisplayModulePage.aspx">
+                <%--<asp:label id="lblSubforums" runat="server" enableviewstate="False" meta:resourcekey="lblSubforumsResource1">Choose Modules</asp:label>--%>
+                Choose Modules
+            </a></li>
+            <li>
+                <a href="/DisplayNotification.aspx" class="notification">
+                    <span class="glyphicon glyphicon-bell" style="font-size: 25px;"></span>
+                        <%if (notifications_count != 0)
+                        {%>
+                        <span class="badge"><%=notifications_count%></span>
+                        <%} %>
+                </a>
+
+                <%--<asp:label id="lblUserGroups" runat="server" enableviewstate="False" meta:resourcekey="lblUserGroupsResource1">edit user-groups</asp:label>--%>
+            </li>
+            <%--<li><a href="allusers.aspx">
+                <asp:label id="lblUsers" runat="server" enableviewstate="false" meta:resourcekey="lblUsersResource1">all users</asp:label>
+            </a></li>
+            <li><a href="adduser.aspx">
+                <asp:label id="lblAddUser" runat="server" enableviewstate="False" meta:resourcekey="lblAddUserResource1">manually add a user</asp:label>
+            </a></li>
+            <li><a href="emailallusers.aspx">
+                <asp:label id="lblEmailAll" runat="server" enableviewstate="False" meta:resourcekey="lblEmailAllResource1">email/PM all users</asp:label>
+            </a></li>
+            <li><a href="purgeoldtopics.aspx">
+                <asp:label id="lblPurge" runat="server" enableviewstate="False" meta:resourcekey="lblPurgeResource1">purge old topics</asp:label>
+            </a></li>--%>
+        </ul>
+    </div>
+</div>
+
+<div class="forumcontent innercontainer">
+    <asp:contentplaceholder id="AspNetForumContentPlaceHolder" runat="server">
+		</asp:contentplaceholder>
+    <br style="clear: both" />
+    <br />
+    <br />
+    <hr />
+    <div class="gray" style="text-align: center">
+        Powered by <a href="http://www.jitbit.com/asp-net-forum/" rel="nofollow" title="Jitbit ASP.NET Forum">Jitbit Forum</a>
+        <asp:label id="lblVersion" runat="server" enableviewstate="false"></asp:label>
+        &copy; 2006-2013 Jitbit Software
+    </div>
+</div>

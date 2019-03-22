@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\aspnetforum.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -170,6 +171,8 @@
     <Content Include="Master_Page.Master" />
     <Content Include="Master_Login.Master" />
     <Content Include="Redirector.aspx" />
+    <Content Include="AspNetForumMaster.Master" />
+    <Content Include="ForumMasterPage.Master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="PostPage.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -264,6 +267,13 @@
     <Compile Include="Entity\fpost.cs" />
     <Compile Include="Entity\notification.cs" />
     <Compile Include="Entity\post.cs" />
+    <Compile Include="ForumMasterPage.Master.cs">
+      <DependentUpon>ForumMasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForumMasterPage.Master.designer.cs">
+      <DependentUpon>ForumMasterPage.Master</DependentUpon>
+    </Compile>
     <Compile Include="getPost.asmx.cs">
       <DependentUpon>getPost.asmx</DependentUpon>
       <SubType>Component</SubType>

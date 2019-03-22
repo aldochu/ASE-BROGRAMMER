@@ -63,7 +63,6 @@ namespace Brogrammer
                         Response.Write("<p>notification cleared!</p>");
 
                     // to direct uid to the exact comment record on the page of the post
-                    display_Notifications(uid);
 
                     Session["POST"] = selectedPostID;
                     Session["CommentID"] = commentid;
