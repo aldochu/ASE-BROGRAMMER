@@ -27,11 +27,13 @@ namespace Brogrammer
             //Session["ROLE"] = "student";
             //Session["POST"] = "user1230220191627";
             /////////////////
-
+            if (Session["Account"] != null)
+                a = (account)Session["Account"]; //to get the session
+            else
+                Response.Redirect("LoginPage.aspx");
 
             role = (string)Session["ROLE"];
 
-            a = (account)Session["Account"]; //to get the session
 
             Get_and_Bind_Post(); //this method is to get the post  
             

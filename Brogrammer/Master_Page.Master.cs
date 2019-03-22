@@ -10,6 +10,13 @@ namespace Brogrammer
 {
     public partial class Master_Page : System.Web.UI.MasterPage
     {
+
+        protected void Page_PreLoad(object sender, EventArgs e)
+        {
+            if(Session["Account"] == null)
+                Response.Redirect("LoginPage.aspx");
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             account a = new account();
@@ -20,13 +27,13 @@ namespace Brogrammer
                 switch (a.role) //this is to limit access, so that different role will go different page
                 {
                     case "student":
-                        Label1.Text = a.name;
+                        //Label1.Text = a.name;
                         break;
                     case "prof":
-                        Label2.Text = a.name;
+                        //Label2.Text = a.name;
                         break;
                     case "admin":
-                        Label3.Text = a.name;
+                        //Label3.Text = a.name;
                         break;
                     default:
                         break;
@@ -35,6 +42,8 @@ namespace Brogrammer
 
                
             }
+            else
+                Response.Redirect("LoginPage.aspx");
         }
     }
 }

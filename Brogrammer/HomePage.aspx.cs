@@ -81,6 +81,10 @@ namespace Brogrammer
             }
             
         }
+        protected void LinkButton_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("ListOfPost.aspx");
+        }
 
         protected void recentPostsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {

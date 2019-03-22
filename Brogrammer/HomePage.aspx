@@ -93,6 +93,7 @@
     <div id="body-container">
 
         <div id="schl-container">
+			<asp:LinkButton id="LinkButton1" Text="FORUM"  OnClick="LinkButton_Click" runat="server"/>
             <h1><a href="www.google.com.sg" target="_self">SCSE</a></h1>
         </div>
 
