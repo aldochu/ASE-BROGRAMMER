@@ -153,6 +153,7 @@
     <Content Include="EditPostPage.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="getPost.asmx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -262,6 +263,10 @@
     <Compile Include="Entity\fpost.cs" />
     <Compile Include="Entity\notification.cs" />
     <Compile Include="Entity\post.cs" />
+    <Compile Include="getPost.asmx.cs">
+      <DependentUpon>getPost.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

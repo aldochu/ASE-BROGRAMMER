@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Brogrammer.Entity;
 using Brogrammer.Controller;
-
+using System.Web.Services;
 
 namespace Brogrammer
 {
@@ -15,14 +15,14 @@ namespace Brogrammer
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            String user = "f";
+           /* String user = "f";
 
             if (!IsPostBack)
             {
                 displayRecentPosts(user);
-            }
+            }*/
         }
-        protected void displayRecentPosts(String filter)
+        /*protected void displayRecentPosts(String filter)
         {
             List<post> recentPosts = PostSystem.getPostByModuleCode(filter);
 
@@ -50,6 +50,13 @@ namespace Brogrammer
         protected string truncateTitle(String postTitle)
         {
             return postTitle.Length >= 21 ? postTitle.Substring(0, 20) + "..." : postTitle;
+        }
+        */
+
+        [WebMethod]
+        public void SetSessionValue(string valueToStore)
+        {
+            Session["POST"] = valueToStore;
         }
     }
 }
