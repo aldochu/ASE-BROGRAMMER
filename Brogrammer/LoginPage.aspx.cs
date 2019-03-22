@@ -54,7 +54,7 @@ namespace Brogrammer
                             Response.Write("<script type=\"text/javascript\">alert('Welcome Back!');location.href='HomePage.aspx'</script>"); 
                             break;
                         case "prof":
-                            Response.Write("<script type=\"text/javascript\">alert('Welcome Back Prof!');location.href='ProfHomePage.aspx'</script>");
+                            Response.Write("<script type=\"text/javascript\">alert('Welcome Back Prof!');location.href='HomePage.aspx'</script>");
                             break;
                         case "admin":
                             Response.Write("<script type=\"text/javascript\">alert('Welcome Back Admin!');location.href='ListOfName.aspx'</script>");
