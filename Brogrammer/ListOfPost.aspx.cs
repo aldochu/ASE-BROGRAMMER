@@ -57,6 +57,7 @@ namespace Brogrammer
         public void SetSessionValue(string valueToStore)
         {
             Session["POST"] = valueToStore;
+            Console.Write(Session["POST"]);
         }
     }
 }

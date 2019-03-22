@@ -169,6 +169,7 @@
     <Content Include="lyGPA.png" />
     <Content Include="Master_Page.Master" />
     <Content Include="Master_Login.Master" />
+    <Content Include="Redirector.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="PostPage.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -347,6 +348,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Redirector.aspx.cs">
+      <DependentUpon>Redirector.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Redirector.aspx.designer.cs">
+      <DependentUpon>Redirector.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
