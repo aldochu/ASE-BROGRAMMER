@@ -15,8 +15,11 @@ namespace Brogrammer
         public int recNum = 0;
         string uid = null;
 
+        public string role;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            role = (string)Session["ROLE"];
             if (Session["Account"] != null)
                 uid = ((account)Session["Account"]).id;
             else

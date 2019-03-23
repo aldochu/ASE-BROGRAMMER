@@ -105,15 +105,17 @@
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 
                 <ContentTemplate>
+					<%if (role == "student")
+							{%>
                     <h2 style="font-weight: bold;">Favourite Posts</h2>
 
                     <%if (recNum == 0)
-                        {%>
+							{%>
                     <p>No favourite posts yet</p>
                     <%} %>
 
                     <%if (favNum != 0)
-                        {%>
+							{%>
 
                     <div class="table-scroll">
                         <asp:Repeater ID="favRepeater" runat="server" OnItemCommand="favPostsRepeater_ItemCommand">
@@ -153,7 +155,8 @@
                         </asp:Repeater>
                     </div>
 
-                    <%} %>
+                    <%}
+							} %>
                 </ContentTemplate>
             </asp:UpdatePanel>
 
