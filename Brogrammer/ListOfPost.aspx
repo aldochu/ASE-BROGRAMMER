@@ -32,7 +32,6 @@
                 $('#postTable tbody').on('click', 'tr', function () {
                     var table = $('#postTable').DataTable().rows(this).data();
                     console.log(table[0].id);
-                    alert("" + table[0].id);
                     $.redirect("/Redirector", { POST: table[0].id}, "POST"); 
                 });
 

@@ -27,7 +27,7 @@ namespace Brogrammer
             List<post> posts = new List<post>();
             using (var conn = new MySqlConnection(cs))
             {
-                string query = "SELECT * FROM post where title like @code order by date desc ";
+                string query = "SELECT * FROM post where mod_code like @code order by date desc ";
                 
 
                 var cmd = new MySqlCommand(query, conn);

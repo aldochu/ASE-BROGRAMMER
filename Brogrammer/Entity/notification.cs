@@ -12,6 +12,6 @@ namespace Brogrammer.Entity
         public string title { get; set; }
         public string userid { get; set; }
         public string content { get; set; }
-        public int flaggednotified { get; set; }
+        public string flaggednotified { get; set; }
     }
 }
