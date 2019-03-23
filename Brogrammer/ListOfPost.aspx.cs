@@ -12,15 +12,18 @@ namespace Brogrammer
 {
     public partial class ListOfPost : System.Web.UI.Page
     {
+        protected string abc;
         protected void Page_Load(object sender, EventArgs e)
         {
+            abc = (string)Session["MODCODE"];
 
-           /* String user = "f";
 
-            if (!IsPostBack)
-            {
-                displayRecentPosts(user);
-            }*/
+            /* String user = "f";
+
+             if (!IsPostBack)
+             {
+                 displayRecentPosts(user);
+             }*/
         }
         /*protected void displayRecentPosts(String filter)
         {
@@ -53,11 +56,5 @@ namespace Brogrammer
         }
         */
 
-        [WebMethod]
-        public void SetSessionValue(string valueToStore)
-        {
-            Session["POST"] = valueToStore;
-            Console.Write(Session["POST"]);
-        }
     }
 }

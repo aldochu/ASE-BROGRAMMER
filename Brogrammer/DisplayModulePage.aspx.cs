@@ -21,25 +21,27 @@ namespace Brogrammer
         }
         private void bindModule()
         {
-            DisplayModule.DataSource = ModuleSystem.getAllModule();
-            DisplayModule.DataBind();
+            moduleRepeater.DataSource = ModuleSystem.getAllModule();
+            moduleRepeater.DataBind();
 
         }
-        protected void DisplayMod_databound(object sender, GridViewRowEventArgs e)
+        protected void moduleRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            RepeaterItem item = e.Item;
+
+            switch (e.CommandName.ToString())
             {
-                // Attaching one onclick event for the entire row, so that it will
-                // fire SelectedIndexChanged, while we click anywhere on the row.
-                e.Row.Attributes["onclick"] =
-                  ClientScript.GetPostBackClientHyperlink(this.DisplayModule, "Select$" + e.Row.RowIndex);
+                case "VIEW_POST":
+                    string selectedModCode = e.CommandArgument.ToString();
+
+                    // to direct uid to the exact comment record on the page of the post
+                    Session["MODCODE"] = selectedModCode;
+                    Response.Redirect("ListOfPost.aspx");
+
+                    //Response.Write("User selected: " + selectedCommentID);
+                    break;
+
             }
-        }
-
-        protected void DisplayModule_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            Response.Write("<script type=\"text/javascript\">alert('Post favorited!')</script>");
         }
     }
 }
