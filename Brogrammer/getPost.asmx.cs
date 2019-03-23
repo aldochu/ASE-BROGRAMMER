@@ -21,14 +21,14 @@ namespace Brogrammer
     {
 
         [WebMethod]
-        public void getPosts()
+        public void getPosts(string searchID)
         {
             string cs = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             List<post> posts = new List<post>();
             using (var conn = new MySqlConnection(cs))
             {
                 string query = "SELECT * FROM post where title like @code order by date desc ";
-                string searchID = "a";
+                
 
                 var cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@code", "%" + searchID + "%");

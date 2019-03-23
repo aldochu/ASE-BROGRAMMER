@@ -2,27 +2,38 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:GridView ID="DisplayModule" runat="server" ShowHeaderWhenEmpty="True" AutoGenerateColumns="false" OnRowDataBound="DisplayMod_databound" OnSelectedIndexChanged="DisplayModule_SelectedIndexChanged">
-        <Columns>
-            <asp:TemplateField HeaderText="ModuleID" Visible="true">
-                        <ItemTemplate>
-                            <asp:Label ID="mid" runat="server" Text='<%# Eval("mid") %>'></asp:Label>
-                        </ItemTemplate>	
-            </asp:TemplateField>
-            <asp:TemplateField HeaderText="ModuleCode" Visible="true">
-                        <ItemTemplate>
-                            <asp:Label ID="modcode" runat="server" Text='<%# Eval("modcode") %>'></asp:Label>
-                        </ItemTemplate>	
-            </asp:TemplateField>
-            <asp:TemplateField HeaderText="ModuleName" Visible="true">
-                        <ItemTemplate>
-                            <asp:Label ID="modname" runat="server" Text='<%# Eval("modname") %>'></asp:Label>
-                        </ItemTemplate>	
-            </asp:TemplateField>
-            </Columns>
+     <asp:Repeater ID="moduleRepeater" runat="server" OnItemCommand="moduleRepeater_ItemCommand">
 
-</asp:GridView>
+                    <HeaderTemplate>
+                        <table id="recentPostsTB">
+                            <thead id="recHeader">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Module Code</th>
+                                    <th>Module Name</th>
+                                </tr>
+                            </thead>
+                    </HeaderTemplate>
 
+                    <ItemTemplate>
+                        <tr>
+                            <td>
+                                <%# Eval("mid") %>
+                            </td>
+                            <td>
+                                <asp:LinkButton runat="server" CommandName="VIEW_POST" CommandArgument='<%# Eval("modcode") %>'><%# Eval("modcode") %></asp:LinkButton>
+                            </td>
+                            <td>
+                                <%# Eval("modname") %>
+                            </td>
+                        </tr>
+                   
+                    </ItemTemplate>
+
+                    <FooterTemplate>
+                        </table>
+                    </FooterTemplate>
+                </asp:Repeater>
 </asp:Content>
 
 

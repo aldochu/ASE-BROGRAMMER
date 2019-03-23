@@ -173,6 +173,7 @@
     <Content Include="Redirector.aspx" />
     <Content Include="AspNetForumMaster.Master" />
     <Content Include="ForumMasterPage.Master" />
+    <Content Include="Books.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="PostPage.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -365,6 +366,13 @@
     </Compile>
     <Compile Include="Redirector.aspx.designer.cs">
       <DependentUpon>Redirector.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Books.aspx.cs">
+      <DependentUpon>Books.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books.aspx.designer.cs">
+      <DependentUpon>Books.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

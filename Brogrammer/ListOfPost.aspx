@@ -9,6 +9,7 @@
     $(document).ready(function () {
         $.ajax({
             type: "POST",
+            data: { searchID : "<%= abc%>"},
             dataType: "json",
             url: "getPost.asmx/getPosts",
             success: function (data) {
