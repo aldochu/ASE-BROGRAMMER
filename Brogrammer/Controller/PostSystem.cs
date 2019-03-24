@@ -19,7 +19,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "INSERT into post (id,uid,title,content,file,date) VALUES (@id,@uid,@title,@content,@file,@date)";
+            string query = "INSERT into post (id,uid,title,content,file,date,mod_code) VALUES (@id,@uid,@title,@content,@file,@date,@module)";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", p.id);
@@ -28,6 +28,7 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("@content", p.content);
             cmd.Parameters.AddWithValue("@file", p.file);
             cmd.Parameters.AddWithValue("@date", p.date);
+            cmd.Parameters.AddWithValue("@module", p.mod);
 
             conn.Open();
             result = cmd.ExecuteNonQuery();

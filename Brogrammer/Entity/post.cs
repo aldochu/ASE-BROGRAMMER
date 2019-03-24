@@ -13,6 +13,7 @@ namespace Brogrammer.Entity
             public string content { get; set; }
             public string file { get; set; }
             public DateTime date { get; set; }
-        
+            public string mod { get; set; }
+
     }
 }
