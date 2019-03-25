@@ -323,7 +323,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM comment where postid = @postid ORDER BY endorseby IS NOT NULL DESC, upvote DESC ";
+            string query = "SELECT * FROM comment where postid = @postid ORDER BY endorseby IS NOT NULL DESC, endorseby DESC, upvote DESC ";
 
 
             var cmd = new MySqlCommand(query, conn);

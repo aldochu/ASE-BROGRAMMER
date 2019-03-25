@@ -267,6 +267,16 @@ txtdesc.style.height = txtdesc.scrollHeight + "px";
 							<asp:TextBox OnDataBinding="changecolor" ID="txtContent" TextMode="multiline" Font-Size="10" runat="server" Width="400px" Text='<%# Eval("Content") %>' ReadOnly="true"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
+					<asp:TemplateField HeaderText="Upvote" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
+                        <ItemTemplate>
+                            <asp:Label ID="lblupvote" runat="server" Font-Size="10" Width="20px" Text='<%# Eval("Upvote") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Downvote" HeaderStyle-Font-Size="6" HeaderStyle-CssClass="center">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDownvote" runat="server" Font-Size="10" Width="20px" Text='<%# Eval("Downvote") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField >
 					<asp:TemplateField>
                         <ItemTemplate>
 							<asp:Button ID="btnEndorseComment" Font-Size="6" runat="server" Text="Endorse Comment" OnClick="btnEndorseComment" visible='<%# (role != "admin")%>' CssClass="btn btn-success" />
