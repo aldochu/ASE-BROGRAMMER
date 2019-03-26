@@ -13,9 +13,13 @@ namespace Brogrammer
     {
         public int notifications_count = 0;
 
+        public string name;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Get_Notifications_Count(((account)Session["Account"]).id);
+
+            name = ((account)Session["Account"]).id;
         }
 
         protected void Get_Notifications_Count(string uid)

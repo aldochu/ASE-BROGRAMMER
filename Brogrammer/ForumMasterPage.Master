@@ -65,6 +65,10 @@
                     <%--<span class="mobilehidden"><a href="editprofile.aspx">Profile</a> |</span>--%>
                     <a href="SignOut.aspx" id="logoutLink" runat="server" enableviewstate="false">Sign Out</a>
                 </span>
+				<span>
+					<br /><br />
+					Welcome <%=name%> !
+				</span>
             </div>
         </div>
 
@@ -98,6 +102,10 @@
 
                 <%--<asp:label id="lblUserGroups" runat="server" enableviewstate="False" meta:resourcekey="lblUserGroupsResource1">edit user-groups</asp:label>--%>
             </li>
+
+			<li>
+
+			</li>
             <%--<li><a href="allusers.aspx">
                 <asp:label id="lblUsers" runat="server" enableviewstate="false" meta:resourcekey="lblUsersResource1">all users</asp:label>
             </a></li>

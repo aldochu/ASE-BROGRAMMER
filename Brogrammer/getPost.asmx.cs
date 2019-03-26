@@ -24,20 +24,20 @@ namespace Brogrammer
         public void getPosts(string searchID)
         {
             string cs = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
-            List<post> posts = new List<post>();
+            List<mpost> posts = new List<mpost>();
             using (var conn = new MySqlConnection(cs))
             {
-                string query = "SELECT * FROM post where title like @code order by date desc ";
-                
+                string query = "SELECT * ,  COALESCE(SUM(upvote), 0) as total from post left join comment on post.id = comment.postid group by post.id HAVING post.mod_code = @code";
+       
 
                 var cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@code", "%" + searchID + "%");
+                cmd.Parameters.AddWithValue("@code", searchID);
 
                 conn.Open();
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    post p = new post();
+                    mpost p = new mpost();
                     
                     p.id = reader["id"].ToString();
                     p.uid = reader["uid"].ToString();
@@ -45,7 +45,8 @@ namespace Brogrammer
                     p.content = reader["content"].ToString();
                     p.date = Convert.ToDateTime(reader["date"]);
                     p.file = reader["file"].ToString();
-                
+                    p.upvote = reader["total"].ToString();
+
                     posts.Add(p);
                 }
             }

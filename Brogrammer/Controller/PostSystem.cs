@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using System.Configuration;
 using Brogrammer.Entity;
 using System.Data;
+using System.Collections;
 
 namespace Brogrammer.Controller
 {
@@ -18,7 +19,7 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "INSERT into post (id,uid,title,content,file,date) VALUES (@id,@uid,@title,@content,@file,@date)";
+            string query = "INSERT into post (id,uid,title,content,file,date,mod_code) VALUES (@id,@uid,@title,@content,@file,@date,@module)";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", p.id);
@@ -27,6 +28,7 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("@content", p.content);
             cmd.Parameters.AddWithValue("@file", p.file);
             cmd.Parameters.AddWithValue("@date", p.date);
+            cmd.Parameters.AddWithValue("@module", p.mod);
 
             conn.Open();
             result = cmd.ExecuteNonQuery();
@@ -316,15 +318,16 @@ namespace Brogrammer.Controller
 
 
         /////////////////////////////////////////////////////////THIS SECTION FOR COMMENT FUNCTION////////////////////////////////////////////
-        public static DataTable getAllCom()
+        public static DataTable getAllCom(string postid)
         {
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT * FROM comment ORDER BY endorseby IS NOT NULL DESC, upvote DESC";
+            string query = "SELECT * FROM comment where postid = @postid ORDER BY endorseby IS NOT NULL DESC, endorseby DESC, upvote DESC ";
 
 
             var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@postid", postid);
             conn.Open();
             var reader = cmd.ExecuteReader();
 
@@ -368,7 +371,41 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "INSERT into comment (commentid,postid,userid,name,content,date) VALUES (@commentid,@postid,@userid,@name,@content,@date)";
+            string query2= "select userid from comment where postid = @postid AND userid<>@userid";
+            var cmd4 = new MySqlCommand(query2, conn);
+            cmd4.Parameters.AddWithValue("@postid", c.postid);
+            cmd4.Parameters.AddWithValue("@userid", c.userid);
+
+            string query3 = "select uid from post where id = @postid";
+            var cmd5 = new MySqlCommand(query3, conn);
+            cmd5.Parameters.AddWithValue("@postid", c.postid);
+
+            conn.Open();
+            var reader = cmd4.ExecuteReader();
+            
+
+            ArrayList idList = new ArrayList();
+
+            while (reader.Read())
+            {
+                idList.Add(reader["userid"].ToString());
+            }
+
+            conn.Close();
+
+            conn.Open();
+            var reader2 = cmd5.ExecuteReader();
+            while (reader2.Read())
+            {
+                idList.Add(reader2["uid"].ToString());
+            }
+            conn.Close();
+
+
+            string ids = string.Join(",", idList.ToArray());
+
+
+            string query = "INSERT into comment (commentid,postid,userid,name,content,date,flaggednotified) VALUES (@commentid,@postid,@userid,@name,@content,@date,@listofnames)";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@commentid", c.commentid);
@@ -377,19 +414,21 @@ namespace Brogrammer.Controller
             cmd.Parameters.AddWithValue("@name", c.name);
             cmd.Parameters.AddWithValue("@content", c.content);
             cmd.Parameters.AddWithValue("@date", c.date);
+            cmd.Parameters.AddWithValue("@listofnames", ids);
 
-            // set the notified flag of all comments within the post
+
+            // set the notified flag of the post that have been commented to 0 to give notification to the owner of the post
             // flaggednotified = 0 means there is an outstanding notification
-            query = "UPDATE comment SET flaggednotified = 0 WHERE postid = @postid AND commentid <> @commentid";
-            var cmd1 = new MySqlCommand(query, conn);
-            cmd1.Parameters.AddWithValue("@postid", c.postid);
-            cmd1.Parameters.AddWithValue("@commentid", c.commentid);
+            query = "UPDATE post SET flaggednotified = 0 WHERE id = @postid";
+            var cmd2 = new MySqlCommand(query, conn);
+            cmd2.Parameters.AddWithValue("@postid", c.postid);
+
 
             conn.Open();
 
 
             result = cmd.ExecuteNonQuery();
-            cmd1.ExecuteNonQuery();
+            cmd2.ExecuteNonQuery();
 
             conn.Close();
             return result;
@@ -560,27 +599,45 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
-            string query = "SELECT id, commentid, title, userid, postid, brogrammer.comment.content, brogrammer.comment.flaggednotified FROM brogrammer.post, brogrammer.comment " +
-                "WHERE brogrammer.comment.postid = brogrammer.post.id AND brogrammer.comment.userid = @uid AND brogrammer.comment.flaggednotified = @notified " +
-                "GROUP BY brogrammer.comment.commentid";
+            
+
+
+            string query = "SELECT id, commentid, title, userid, postid, c.content, c.flaggednotified FROM post p, comment c WHERE (userid <> @uid) GROUP BY commentid";
+
+            //title, postid and commentid and comment content and commenterid
+
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@uid", uid);
-            cmd.Parameters.AddWithValue("@notified", 0);
 
             conn.Open();
             var reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                notification notification = new notification();
-                notification.commentid = reader["commentid"].ToString();
-                notification.postid = reader["postid"].ToString();
-                notification.title = reader["title"].ToString();
-                notification.content = reader["content"].ToString();
-                notification.userid = reader["userid"].ToString();
-                notification.flaggednotified = Convert.ToInt16(reader["flaggednotified"].ToString());
-                list.Add(notification);
+                // Retrieving Notifications
+                string idStr = reader["flaggednotified"].ToString();
+                // get an arr of user ids associated with the current post
+                string[] idArr = idStr.Split(',').ToArray();
+
+                // parse array to arraylist for easier manipulation
+                ArrayList idList = new ArrayList(idArr);
+
+                var userid = uid;
+
+                if (idList.Contains(userid))
+                {
+                   
+                    notification notification = new notification();
+                    notification.commentid = reader["commentid"].ToString();
+                    notification.postid = reader["postid"].ToString();
+                    notification.title = reader["title"].ToString();
+                    notification.content = reader["content"].ToString();
+                    notification.userid = reader["userid"].ToString();
+                    list.Add(notification);
+                }
+
+                
 
             }
 
@@ -598,13 +655,56 @@ namespace Brogrammer.Controller
             var conn = new MySqlConnection(dbConnectionString);
             int result = 0;
 
-            string query = "UPDATE comment SET flaggednotified = @clearflag where commentid = @commentid AND userid = @uid";
+            string query2 = "select userid, flaggednotified from comment where commentid = @commentid";
+
+            var cmd4 = new MySqlCommand(query2, conn);
+            cmd4.Parameters.AddWithValue("@commentid", commentid);
+            conn.Open();
+            var reader = cmd4.ExecuteReader();
+
+            string Listofnames="";
+
+            while (reader.Read())
+            {
+                Listofnames = reader["flaggednotified"].ToString();
+            }
+            conn.Close();
+
+            ////////////this part to break userid into strings//////
+            string[] words = Listofnames.Split(',');
+
+            string newListofnames = "";
+            foreach (string s in words)
+            {
+                if (s != userid)
+                {
+                    if(newListofnames!="")
+                        newListofnames += s;
+                    else
+                    {
+                        newListofnames += "," + s;
+                    }
+                }
+
+         
+            }
+
+            // parse array to arraylist for easier manipulation
+            ArrayList idList = new ArrayList(words);
+
+            idList.Remove(userid);
+            string ids = string.Join(",", idList.ToArray());
+
+
+
+            
+
+            string query = "UPDATE comment SET flaggednotified = @clearflag where commentid = @commentid";
 
             //this is to increment the vote
             var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@clearFlag", 1);
+            cmd.Parameters.AddWithValue("@clearFlag", ids);
             cmd.Parameters.AddWithValue("@commentid", commentid);
-            cmd.Parameters.AddWithValue("uid", userid);
 
             conn.Open();
             result = cmd.ExecuteNonQuery();

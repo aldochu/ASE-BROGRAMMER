@@ -13,11 +13,13 @@ namespace Brogrammer
     public partial class PostPage : System.Web.UI.Page
     {
         account a = new account();
+        string mod;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             a = (account)Session["Account"]; //this is to get cookie
+            mod = (string)Session["MODCODE"];
         }
 
         protected void create_Click(object sender, EventArgs e)
@@ -55,9 +57,11 @@ namespace Brogrammer
                 post p = new post();
                 p.id = "user1" + DateTime.Now.ToString("ddMMyyyyHHmm"); //user1 is just a placeholder, will use session to get the id
                 p.uid = "user1"; //uid id
-                p.title = txtContent.Text;
+                p.title = txtTitle.Text;
                 p.content = txtContent.Text;
                 p.date = DateTime.Now;
+                p.mod = mod;
+
 
                 if (FileUpload.HasFile)
                 {

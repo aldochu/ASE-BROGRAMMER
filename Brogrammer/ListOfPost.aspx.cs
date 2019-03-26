@@ -25,36 +25,46 @@ namespace Brogrammer
                  displayRecentPosts(user);
              }*/
         }
+
+        protected void Unnamed1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PostPage.aspx");
+        }
+
+        protected void Unnamed1_Click1(object sender, EventArgs e)
+        {
+            Response.Redirect("Books.aspx");
+        }
         /*protected void displayRecentPosts(String filter)
-        {
-            List<post> recentPosts = PostSystem.getPostByModuleCode(filter);
+{
+List<post> recentPosts = PostSystem.getPostByModuleCode(filter);
 
-            recentPostsRepeater.DataSource = recentPosts;
-            recentPostsRepeater.DataBind();
-        }
-        protected void recentPostsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
-        {
-            RepeaterItem item = e.Item;
+recentPostsRepeater.DataSource = recentPosts;
+recentPostsRepeater.DataBind();
+}
+protected void recentPostsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
+{
+RepeaterItem item = e.Item;
 
-            switch (e.CommandName.ToString())
-            {
-                case "VIEW_POST":
-                    string selectedPostID = e.CommandArgument.ToString();
+switch (e.CommandName.ToString())
+{
+case "VIEW_POST":
+  string selectedPostID = e.CommandArgument.ToString();
 
-                    // to direct uid to the exact comment record on the page of the post
-                    Session["POST"] = selectedPostID;
-                    Response.Redirect("DisplayPost.aspx");
+  // to direct uid to the exact comment record on the page of the post
+  Session["POST"] = selectedPostID;
+  Response.Redirect("DisplayPost.aspx");
 
-                    //Response.Write("User selected: " + selectedCommentID);
-                    break;
+  //Response.Write("User selected: " + selectedCommentID);
+  break;
 
-            }
-        }
-        protected string truncateTitle(String postTitle)
-        {
-            return postTitle.Length >= 21 ? postTitle.Substring(0, 20) + "..." : postTitle;
-        }
-        */
+}
+}
+protected string truncateTitle(String postTitle)
+{
+return postTitle.Length >= 21 ? postTitle.Substring(0, 20) + "..." : postTitle;
+}
+*/
 
     }
 }

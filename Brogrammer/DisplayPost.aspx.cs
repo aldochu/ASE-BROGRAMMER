@@ -70,10 +70,10 @@ namespace Brogrammer
 
         private void bindAccounts()
         {
-            grdAllCom.DataSource = PostSystem.getAllCom();
+            grdAllCom.DataSource = PostSystem.getAllCom(p.id);
             grdAllCom.DataBind();
 
-            grdAllCom2.DataSource = PostSystem.getAllCom();
+            grdAllCom2.DataSource = PostSystem.getAllCom(p.id);
             grdAllCom2.DataBind();
         }
 

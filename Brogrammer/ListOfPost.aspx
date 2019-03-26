@@ -17,7 +17,6 @@
                 var datatableVariable = $('#postTable').DataTable({
                     data: data,
                     columns: [
-                        { 'data': 'id' },
                         { 'data': 'uid' },
                         { 'data': 'title' },
                         {
@@ -26,13 +25,14 @@
                                 var month = date.getMonth() + 1;
                                 return date.getDate() + "/" + month + "/" + date.getFullYear() +" - " + date.getHours() +":"  + date.getMinutes() + ":" + date.getSeconds();
                             }
-                        }]
+                        },
+                        { 'data' : 'upvote'}
+                    ]
                 });
 
                 $('#postTable tbody').on('click', 'tr', function () {
                     var table = $('#postTable').DataTable().rows(this).data();
                     console.log(table[0].id);
-                    alert("" + table[0].id);
                     $.redirect("/Redirector", { POST: table[0].id}, "POST"); 
                 });
 
@@ -74,17 +74,23 @@
             </table>
         </FooterTemplate>
     </asp:Repeater>--%>
+
+    <% if (abc.Equals("CZ3002")){ %>
+    <asp:LinkButton runat="server" CommandArgument="LinkButtonClick" OnClick="Unnamed1_Click1">Click here for reference material</asp:LinkButton>
+    <%} %>
      <table id="postTable" class="display">  
       <thead>  
               <tr>  
-                        <th>ID</th>  
-                        <th>Uid</th>  
+                        <th>User ID</th>  
                         <th>Title</th>  
                         <th>Date</th>  
+                        <th>Total Upvote</th>  
             </tr>
     </thead>
     <tbody>
 
     </tbody>
 </table>
+
+    <asp:LinkButton runat="server" CommandArgument="LinkButtonClick" OnClick="Unnamed1_Click">Create Post</asp:LinkButton>
 </asp:Content>
