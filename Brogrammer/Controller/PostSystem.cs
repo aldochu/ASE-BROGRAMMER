@@ -547,12 +547,34 @@ namespace Brogrammer.Controller
             string dbConnectionString = ConfigurationManager.ConnectionStrings["Brogrammer"].ConnectionString;
             var conn = new MySqlConnection(dbConnectionString);
 
+            string query2 = "select userid from comment where postid = @postid AND userid<>@userid";
+            var cmd4 = new MySqlCommand(query2, conn);
+            cmd4.Parameters.AddWithValue("@postid", c.postid);
+            cmd4.Parameters.AddWithValue("@userid", c.userid);
 
 
-            string query = "UPDATE comment SET endorseby = @endorseby WHERE commentid=@id";
+            conn.Open();
+            var reader = cmd4.ExecuteReader();
+
+
+            ArrayList idList = new ArrayList();
+
+            while (reader.Read())
+            {
+                idList.Add(reader["userid"].ToString());
+            }
+
+            conn.Close();
+
+
+            string ids = string.Join(",", idList.ToArray());
+
+
+            string query = "UPDATE comment SET endorseby = @endorseby, flaggednotified = @listofnames WHERE commentid=@id";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", c.commentid);
+            cmd.Parameters.AddWithValue("@listofnames", ids);
             cmd.Parameters.AddWithValue("@endorseby", c.endorseby);
 
             conn.Open();
@@ -602,7 +624,7 @@ namespace Brogrammer.Controller
             
 
 
-            string query = "SELECT id, commentid, title, userid, postid, c.content, c.flaggednotified FROM post p, comment c WHERE (userid <> @uid) GROUP BY commentid";
+            string query = "SELECT id, commentid, title, userid, postid, c.content, c.flaggednotified FROM post p, comment c GROUP BY commentid";
 
             //title, postid and commentid and comment content and commenterid
 

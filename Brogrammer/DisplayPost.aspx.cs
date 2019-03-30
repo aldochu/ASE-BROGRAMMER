@@ -224,6 +224,8 @@ namespace Brogrammer
             System.Web.UI.WebControls.TextBox txtContent = grdAllCom.Rows[i].FindControl("txtContent") as System.Web.UI.WebControls.TextBox; //get id of the specific row
             c.commentid = lblID.Text; //this is comment ID
             c.endorseby = a.name; //since this function can only be call by prof, so the current uid is prof
+            c.postid = p.id;
+            c.userid = a.id;
 
 
             PostSystem.Endorse(c);
