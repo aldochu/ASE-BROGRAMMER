@@ -247,7 +247,16 @@ namespace Brogrammer
                 lblContent.Text = "Comment cannot be empty";
                 check = false;
             }
-
+            else if (Validation.MoreThanChar(txtContent.Text, 5))
+            {
+                lblTitle.Text = "Title must be more than 5 char";
+                check = false;
+            }
+            else if (Validation.LessThanChar(txtContent.Text, 500))
+            {
+                lblTitle.Text = "Title must be more than 500 char";
+                check = false;
+            }
 
 
             if (check == true)

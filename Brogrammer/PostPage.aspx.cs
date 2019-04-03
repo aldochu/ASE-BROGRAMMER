@@ -32,9 +32,30 @@ namespace Brogrammer
                 lblTitle.Text = "Title cannot be empty";
                 check = false;
             }
+            else if (Validation.MoreThanChar(txtTitle.Text, 5))
+            {
+                lblTitle.Text = "Title must be more than 5 char";
+                check = false;
+            }
+            else if (Validation.LessThanChar(txtTitle.Text, 500))
+            {
+                lblTitle.Text = "Title must be more than 500 char";
+                check = false;
+            }
+
             if (Validation.isEmpty(txtContent.Text))
             {
                 lblContent.Text = "Content cannot be empty";
+                check = false;
+            }
+            else if (Validation.MoreThanChar(txtContent.Text, 5))
+            {
+                lblContent.Text = "Content must be more than 5 char";
+                check = false;
+            }
+            else if (Validation.LessThanChar(txtContent.Text, 500))
+            {
+                lblContent.Text = "Content must be more than 500 char";
                 check = false;
             }
 

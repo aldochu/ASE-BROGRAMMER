@@ -29,6 +29,24 @@ namespace Brogrammer.Controller
 
         }
 
+        public static bool MoreThanChar(String s, int num)
+        {
+            if (s.Length > num)
+                return true;
+            else
+                return false;
+
+        }
+
+        public static bool LessThanChar(String s, int num)
+        {
+            if (s.Length < num)
+                return true;
+            else
+                return false;
+
+        }
+
         public static bool CheckEmail(string email)
         {
             if (String.IsNullOrEmpty(email))
