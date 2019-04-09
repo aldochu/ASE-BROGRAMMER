@@ -31,7 +31,7 @@ namespace Brogrammer.Controller
 
         public static bool MoreThanChar(String s, int num)
         {
-            if (s.Length > num)
+            if (s.Length < num)
                 return true;
             else
                 return false;
@@ -40,7 +40,7 @@ namespace Brogrammer.Controller
 
         public static bool LessThanChar(String s, int num)
         {
-            if (s.Length < num)
+            if (s.Length > num)
                 return true;
             else
                 return false;

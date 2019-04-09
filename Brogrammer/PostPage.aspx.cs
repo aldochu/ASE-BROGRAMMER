@@ -39,7 +39,7 @@ namespace Brogrammer
             }
             else if (Validation.LessThanChar(txtTitle.Text, 500))
             {
-                lblTitle.Text = "Title must be more than 500 char";
+                lblTitle.Text = "Title must be less than 500 char";
                 check = false;
             }
 
@@ -55,7 +55,7 @@ namespace Brogrammer
             }
             else if (Validation.LessThanChar(txtContent.Text, 500))
             {
-                lblContent.Text = "Content must be more than 500 char";
+                lblContent.Text = "Content must be less than 500 char";
                 check = false;
             }
 
